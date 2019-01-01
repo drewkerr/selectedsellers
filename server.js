@@ -7,22 +7,21 @@ app.set('json spaces', 2)
 const cheerio = require('cheerio')
 
 var fetch = require('request')
-var today = new Date().toISOString().slice(0,10)
-var data
+var data = {}
+var symbol = 'BKW'
 
 app.use(function (request, response, next) {
-  if (! data) {
+  if (! data.length) {
     fetch.get({
-      url: 'https://quotes.wsj.com/AU/XASX/BKW/financials/annual/balance-sheet',
+      url: 'https://quotes.wsj.com/AU/XASX/'+symbol+'/financials/annual/balance-sheet',
     }, (err, res, body) => {
       if (err) {
         console.log('Error:', err)
       } else if (res.statusCode !== 200) {
         console.log('Status:', res.statusCode)
       } else {
-        console.log('Data loaded for ' + today)
+        console.log('Data loaded')
         const $ = cheerio.load(body)
-        console.log($('.cr_dataTable .fiscalYr').text())
         switch($('.fiscalYr').eq(1).text()) {
           case "All values AUD Millions.":
             var multiplier = 1000000
@@ -30,7 +29,8 @@ app.use(function (request, response, next) {
           default:
             var multiplier = 1
         }
-        data = parseInt($('td:contains("Long-Term Debt")').first().parent().children().eq(1).text())*multiplier
+        data[symbol] = parseInt($('td:contains("Long-Term Debt")').first().parent().children().eq(1).text())*multiplier
+        console.log(data)
         next()
       }
     })
@@ -40,7 +40,7 @@ app.use(function (request, response, next) {
 })
 
 app.get('/', function (request, response) {
-  response.render('index', { date: today, data: data})
+  response.render('index', {data: data})
 })
 
 app.get('/json', function (request, response) {
