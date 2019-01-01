@@ -8,10 +8,11 @@ const cheerio = require('cheerio')
 
 var fetch = require('request')
 var data = {}
-var symbol = 'BKW'
+var symbols = ['BKW','CSL']
 
 app.use(function (request, response, next) {
-  if (! data.length) {
+  //if (! data.length) {
+  for (let symbol of symbols) {
     fetch.get({
       url: 'https://quotes.wsj.com/AU/XASX/'+symbol+'/financials/annual/balance-sheet',
     }, (err, res, body) => {
@@ -34,9 +35,10 @@ app.use(function (request, response, next) {
         next()
       }
     })
-  } else {
-    next()
   }
+  //} else {
+  //  next()
+  //}
 })
 
 app.get('/', function (request, response) {
