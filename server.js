@@ -22,8 +22,15 @@ app.use(function (request, response, next) {
       } else {
         console.log('Data loaded for ' + today)
         const $ = cheerio.load(body)
-        var millions = $('.fiscalYr').text()
-        data = $('td:contains("Long-Term Debt")')
+        console.log($('.cr_dataTable .fiscalYr').text())
+        switch($('.fiscalYr').eq(1).text()) {
+          case "All values AUD Millions.":
+            var multiplier = 1000000
+            break
+          default:
+            var multiplier = 1
+        }
+        data = parseInt($('td:contains("Long-Term Debt")').first().parent().children().eq(1).text())*multiplier
         next()
       }
     })
