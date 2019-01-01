@@ -30,10 +30,10 @@ app.use(function (request, response, next) {
           default:
             var multiplier = 1
         }
-        var st = parseInt($('td:contains("ST Debt & Current Portion LT Debt")').first().parent().children().eq(1).text())*multiplier || 0
-        var lt = parseInt($('td:contains("Long-Term Debt")').first().parent().children().eq(1).text())*multiplier || 0
+        var st = parseInt($('td:contains("ST Debt & Current Portion LT Debt")').first().parent().children().eq(1).text().replace(/[^0-9]/g, ''))*multiplier || 0
+        var lt = parseInt($('td:contains("Long-Term Debt")').first().parent().children().eq(1).text().replace(/[^0-9]/g, ''))*multiplier || 0
         data[symbol] = st+lt
-        console.log(data)
+        console.log(st,lt,data)
         next()
       }
     })
