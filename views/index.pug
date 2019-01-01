@@ -1,0 +1,14 @@
+doctype html
+html
+  head
+    title Compass
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    block style
+      link(rel="stylesheet" href="/style.css")
+  body
+    block content
+      h1= date
+    block scripts
+      script(src="https://code.jquery.com/jquery-2.2.1.min.js")
+      script(src="/client.js")
