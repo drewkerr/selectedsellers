@@ -3,7 +3,8 @@ var app = express()
 app.use(express.static('public'))
 app.set('view engine', 'pug')
 app.locals.pretty = true;
-app.set('json spaces', 2);
+app.set('json spaces', 2)
+const cheerio = require('cheerio')
 
 var fetch = require('request')
 var today = new Date().toISOString().slice(0,10)
@@ -20,7 +21,9 @@ app.use(function (request, response, next) {
         console.log('Status:', res.statusCode)
       } else {
         console.log('Data loaded for ' + today)
-        data = body
+        const $ = cheerio.load(body)
+        var millions = $('.fiscalYr').text()
+        data = $('td:contains("Long-Term Debt")')
         next()
       }
     })
