@@ -15,8 +15,8 @@ app.use(function (request, response, next) {
   //if (! data.length) {
   for (let symbol of symbols) {
     for (let statement of statements)
-    fetch.get({
-      url: 'https://quotes.wsj.com/AU/XASX/'+symbol+'/financials/annual/'+statement,
+      fetch.get({
+        url: 'https://quotes.wsj.com/AU/XASX/'+symbol+'/financials/annual/'+statement,
     }, (err, res, body) => {
       if (err) {
         console.log('Error:', err)
@@ -34,8 +34,9 @@ app.use(function (request, response, next) {
         }
         var st = parseInt($('td:contains("ST Debt & Current Portion LT Debt")').first().parent().children().eq(1).text().replace(/[^0-9]/g, ''))*multiplier || 0
         var lt = parseInt($('td:contains("Long-Term Debt")').first().parent().children().eq(1).text().replace(/[^0-9]/g, ''))*multiplier || 0
-        data[symbol] = st+lt
-        console.log(st,lt,data)
+        var cf = parseInt($('td:contains("Free Cash Flow")').first().parent().children().eq(1).text().replace(/[^0-9]/g, ''))*multiplier || 0
+        data[symbol] = (st+lt)/cf
+        console.log(st,lt,cf,data)
         next()
       }
     })
