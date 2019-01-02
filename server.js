@@ -15,7 +15,7 @@ app.use(function (request, response, next) {
   //if (! data.length) {
   for (let symbol of symbols) {
     fetch.get({
-      url: 'https://quotes.wsj.com/AU/XASX/'+symbol+'/financials/annual/'+pages,
+      url: 'https://quotes.wsj.com/AU/XASX/'+symbol+'/financials/annual/'+pages[0],
     }, (err, res, body) => {
       if (err) {
         console.log('Error:', err)
