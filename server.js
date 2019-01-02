@@ -9,12 +9,14 @@ const cheerio = require('cheerio')
 var fetch = require('request')
 var data = {}
 var symbols = ['BKW','CSL']
+var statements = ['balance-sheet','cash-flow']
 
 app.use(function (request, response, next) {
   //if (! data.length) {
   for (let symbol of symbols) {
+    for (let statement of statements)
     fetch.get({
-      url: 'https://quotes.wsj.com/AU/XASX/'+symbol+'/financials/annual/balance-sheet',
+      url: 'https://quotes.wsj.com/AU/XASX/'+symbol+'/financials/annual/'+statement,
     }, (err, res, body) => {
       if (err) {
         console.log('Error:', err)
