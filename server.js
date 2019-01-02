@@ -33,7 +33,7 @@ app.use(function (request, response, next) {
         var st = parseInt($('td:contains("ST Debt & Current Portion LT Debt")').first().parent().children().eq(1).text())*multiplier || 0
         var lt = parseInt($('td:contains("Long-Term Debt")').first().parent().children().eq(1).text())*multiplier || 0
         data[symbol] = st+lt
-        console.log(data)
+        console.log(st,lt,data)
         next()
       }
     })
