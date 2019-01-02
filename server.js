@@ -38,10 +38,10 @@ app.use(function (request, response, next) {
         //data[symbol] = st+lt/fcf
         //console.log(st,lt,fcf,data)
         next()
-      }
-    })
+      
+    
 
-      fetch.get({
+      fetch.get{
         url: 'https://quotes.wsj.com/AU/XASX/'+symbol+'/financials/annual/cash-flow',
     }, (err, res, body) => {
       if (err) {
@@ -64,7 +64,7 @@ app.use(function (request, response, next) {
         data[symbol] = st+lt/fcf
         console.log(st,lt,fcf,data)
         next()
-      }
+      }}
     })
   }
   //} else {
