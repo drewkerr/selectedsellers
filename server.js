@@ -35,7 +35,7 @@ app.use(function (request, response, next) {
         var st = parseInt($('td:contains("ST Debt & Current Portion LT Debt")').first().parent().children().eq(1).text().replace(/[^0-9]/g, ''))*multiplier || 0
         var lt = parseInt($('td:contains("Long-Term Debt")').first().parent().children().eq(1).text().replace(/[^0-9]/g, ''))*multiplier || 0
         var cf = parseInt($('td:contains("Free Cash Flow")').first().parent().children().eq(1).text().replace(/[^0-9]/g, ''))*multiplier || 0
-        data[symbol] = (st+lt)/cf
+        data[symbol] = st,lt,(st+lt)/cf
         console.log(st,lt,cf,data)
         next()
       }
