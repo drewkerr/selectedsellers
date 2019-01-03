@@ -10,6 +10,7 @@ var fetch = require('request')
 var data = {}
 var symbols = ['BKW','CSL']
 var pages = ['balance-sheet','cash-flow']
+var indicators = ['ST Debt & Current Portion LT Debt','Long-Term Debt', 'Free Cash Flow' ]
 
 
 
@@ -17,7 +18,7 @@ var pages = ['balance-sheet','cash-flow']
 
 
 
-app.getData(function (symbol,page)
+app.getData(String ()
 {
   
   
