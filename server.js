@@ -11,6 +11,17 @@ var data = {}
 var symbols = ['BKW','CSL']
 var pages = ['balance-sheet','cash-flow']
 
+
+
+app.getData
+
+
+
+
+
+
+
+
 app.use(function (request, response, next) {
   //if (! data.length) {
   for (let symbol of symbols) {
@@ -31,9 +42,13 @@ app.use(function (request, response, next) {
           default:
             var multiplier = 1
         }
+        
+        
         var st = parseInt($('td:contains("ST Debt & Current Portion LT Debt")').first().parent().children().eq(1).text().replace(/[^0-9]/g, ''))*multiplier || 0
         var lt = parseInt($('td:contains("Long-Term Debt")').first().parent().children().eq(1).text().replace(/[^0-9]/g, ''))*multiplier || 0
-        data[symbol] = st+lt
+        var fcf = parseInt($('td:contains("Free Cash Flow")').first().parent().children().eq(1).text().replace(/[^0-9]/g, ''))*multiplier || 0
+        
+        data[symbol] = (st+lt)/fcf
         console.log(st,lt,data)
         next()
       }
