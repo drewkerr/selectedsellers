@@ -11,15 +11,9 @@ var data = {}
 var symbols = ['BKW','CSL']
 var pages = ['balance-sheet','cash-flow']
 var indicators = ['ST Debt & Current Portion LT Debt','Long-Term Debt', 'Free Cash Flow' ]
-
-
-
-let BKW = new Company("BKW", 0, 0, 0);
-let CSL = new Company("CSL", 0, 0, 0);
-
-
-
-
+var st = 0;
+var lt = 0;
+var fcf = 0;
 
 
 class Company {
@@ -101,7 +95,7 @@ app.getData(function (symbol, page, indicator){
 
 })
 
-/*
+
 app.use(function (request, response, next) {
   //if (! data.length) {
   for (let symbol of symbols) {
@@ -124,21 +118,54 @@ app.use(function (request, response, next) {
         }
         
         
-        var st = parseInt($('td:contains("ST Debt & Current Portion LT Debt")').first().parent().children().eq(1).text().replace(/[^0-9]/g, ''))*multiplier || 0
-        var lt = parseInt($('td:contains("Long-Term Debt")').first().parent().children().eq(1).text().replace(/[^0-9]/g, ''))*multiplier || 0
-        var fcf = parseInt($('td:contains("Free Cash Flow")').first().parent().children().eq(1).text().replace(/[^0-9]/g, ''))*multiplier || 0
+        st = parseInt($('td:contains("ST Debt & Current Portion LT Debt")').first().parent().children().eq(1).text().replace(/[^0-9]/g, ''))*multiplier || 0
+        lt = parseInt($('td:contains("Long-Term Debt")').first().parent().children().eq(1).text().replace(/[^0-9]/g, ''))*multiplier || 0
         
-        data[symbol] = (st+lt)/fcf
+        
+        
         console.log(st,lt,data)
         next()
       }
     })
+    
+    
   }
+  fetch.get({
+      url: 'https://quotes.wsj.com/AU/XASX/'+symbol+'/financials/annual/'+pages[0],
+    }, (err, res, body) => {
+      if (err) {
+        console.log('Error:', err)
+      } else if (res.statusCode !== 200) {
+        console.log('Status:', res.statusCode)
+      } else {
+        console.log('Data loaded')
+        const $ = cheerio.load(body)
+        switch($('.fiscalYr').eq(1).text()) {
+          case "All values AUD Millions.":
+            var multiplier = 1000000
+            break
+          default:
+            var multiplier = 1
+        }
+        
+        
+        
+        fcf = parseInt($('td:contains("Free Cash Flow")').first().parent().children().eq(1).text().replace(/[^0-9]/g, ''))*multiplier || 0
+        next()
+      }
+    })
+  
+  data[symbol] = (st+lt)/fcf
+  
+  
+  
   //} else {
   //  next()
   //}
 })
-*/
+
+
+
 
 app.get('/', function (request, response) {
   response.render('index', {data: data})
