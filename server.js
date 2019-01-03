@@ -15,7 +15,55 @@ var indicators = ['ST Debt & Current Portion LT Debt','Long-Term Debt', 'Free Ca
 
 
 
-class Company {}
+class Company {
+
+  
+  constructor(symbol, st, lt, fcf){
+    this.symbol = symbol;
+    this.st = st;
+    this.lt = lt;
+    this.fcf = fcf;
+    
+  
+  }
+
+  get symbol() {
+    return this._symbol;
+  }
+
+  set symbol(value) {
+    this._name = value;
+  }
+  
+  get st() {
+    return this._st;
+  }
+
+  set st(value) {
+    this._st = value;
+  }
+  
+  get lt() {
+    return this._lt;
+  }
+
+  set lt(value) {
+    this._name = value;
+  }
+  
+  get symbol() {
+    return this._symbol;
+  }
+
+  set symbol(value) {
+    this._name = value;
+  }
+  
+  
+  
+
+
+}
 
 
 
