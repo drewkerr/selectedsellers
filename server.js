@@ -41,7 +41,7 @@ class Company {
   }
 
   set st(value) {
-    this._st = value;
+    value = getData(this.symbol, pages(0), indicators(0)) = value;
   }
   
   get lt() {
@@ -49,7 +49,7 @@ class Company {
   }
 
   set lt(value) {
-    this._lt = value;
+    getData(this.symbol, pages(0), indicators(1)) = value;
   }
   
   get fcf() {
