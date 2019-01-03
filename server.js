@@ -13,7 +13,18 @@ var pages = ['balance-sheet','cash-flow']
 
 
 
-app.getData
+
+
+
+
+app.getData(function (symbol,page)
+{
+  
+  
+  
+  
+})
+            
 
 
 
