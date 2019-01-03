@@ -14,10 +14,17 @@ var indicators = ['ST Debt & Current Portion LT Debt','Long-Term Debt', 'Free Ca
 
 
 
+
+class Company {}
+
+
+
+
+
 app.getData(function (symbol, page, indicator){
-    for (let symbol of symbols) {
+    
     fetch.get({
-      url: 'https://quotes.wsj.com/AU/XASX/'+symbol+'/financials/annual/'+pages[0],
+      url: 'https://quotes.wsj.com/AU/XASX/'+symbol+'/financials/annual/'+page,
     }, (err, res, body) => {
       if (err) {
         console.log('Error:', err)
@@ -35,10 +42,10 @@ app.getData(function (symbol, page, indicator){
         }
         
         
-        var temp = parseInt($('td:contains(indicator)').first().parent().children().eq(1).text().replace(/[^0-9]/g, ''))*multiplier || 0
+        var temp = parseInt($('td:contains(' + indicator + ')').first().parent().children().eq(1).text().replace(/[^0-9]/g, ''))*multiplier || 0
       }
     })
-  }
+  
 
               
 
