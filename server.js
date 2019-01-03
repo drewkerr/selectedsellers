@@ -14,17 +14,18 @@ var indicators = ['ST Debt & Current Portion LT Debt','Long-Term Debt', 'Free Ca
 
 
 
+let BKW = new Company("BKW", 0, 0, 0);
+let CSL = new Company("CSL", 0, 0, 0);
+
+
+
 
 class Company {
-
-  
   constructor(symbol, st, lt, fcf){
     this.symbol = symbol;
     this.st = st;
     this.lt = lt;
     this.fcf = fcf;
-    
-  
   }
 
   get symbol() {
@@ -48,21 +49,16 @@ class Company {
   }
 
   set lt(value) {
-    this._name = value;
+    this._lt = value;
   }
   
-  get symbol() {
-    return this._symbol;
+  get fcf() {
+    return this._fcf;
   }
 
-  set symbol(value) {
-    this._name = value;
+  set fcf(value) {
+    this._fcf = value;
   }
-  
-  
-  
-
-
 }
 
 
@@ -89,14 +85,13 @@ app.getData(function (symbol, page, indicator){
             var multiplier = 1
         }
         
-        
         var temp = parseInt($('td:contains(' + indicator + ')').first().parent().children().eq(1).text().replace(/[^0-9]/g, ''))*multiplier || 0
+        return temp;
       }
     })
   
 
               
-
 
 })
 
