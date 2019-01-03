@@ -14,24 +14,36 @@ var indicators = ['ST Debt & Current Portion LT Debt','Long-Term Debt', 'Free Ca
 
 
 
+app.getData(function (symbol, page, indicator){
+    for (let symbol of symbols) {
+    fetch.get({
+      url: 'https://quotes.wsj.com/AU/XASX/'+symbol+'/financials/annual/'+pages[0],
+    }, (err, res, body) => {
+      if (err) {
+        console.log('Error:', err)
+      } else if (res.statusCode !== 200) {
+        console.log('Status:', res.statusCode)
+      } else {
+        console.log('Data loaded')
+        const $ = cheerio.load(body)
+        switch($('.fiscalYr').eq(1).text()) {
+          case "All values AUD Millions.":
+            var multiplier = 1000000
+            break
+          default:
+            var multiplier = 1
+        }
+        
+        
+        var temp = parseInt($('td:contains(indicator)').first().parent().children().eq(1).text().replace(/[^0-9]/g, ''))*multiplier || 0
+      }
+    })
+  }
+
+              
 
 
-
-
-app.getData(String ()
-{
-  
-  
-  
-  
 })
-            
-
-
-
-
-
-
 
 
 app.use(function (request, response, next) {
