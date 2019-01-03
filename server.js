@@ -16,6 +16,7 @@ var lt = 0;
 var fcf = 0;
 
 
+/*
 class Company {
   constructor(symbol, st, lt, fcf){
     this.symbol = symbol;
@@ -61,10 +62,9 @@ class Company {
   }
 }
 
+*/
 
-
-
-
+/*
 app.getData(function (symbol, page, indicator){
     
     fetch.get({
@@ -89,12 +89,8 @@ app.getData(function (symbol, page, indicator){
         return temp;
       }
     })
-  
-
-              
-
 })
-
+*/
 
 app.use(function (request, response, next) {
   //if (! data.length) {
@@ -117,21 +113,21 @@ app.use(function (request, response, next) {
             var multiplier = 1
         }
         
-        
         st = parseInt($('td:contains("ST Debt & Current Portion LT Debt")').first().parent().children().eq(1).text().replace(/[^0-9]/g, ''))*multiplier || 0
-        lt = parseInt($('td:contains("Long-Term Debt")').first().parent().children().eq(1).text().replace(/[^0-9]/g, ''))*multiplier || 0
+        lt = parseInt($('td:contains("Long-Term Debt")').first().parent().children().eq(1).text().replace(/[^0-9]/g, ''))*multiplier || 0      
         
-        
-        
-        console.log(st,lt,data)
+        //console.log(st,lt,data)
         next()
       }
-    })
-    
-    
+    }) 
   }
-  fetch.get({
-      url: 'https://quotes.wsj.com/AU/XASX/'+symbol+'/financials/annual/'+pages[0],
+})
+
+app.use2(function (request, response, next) {
+  //if (! data.length) {
+  for (let symbol of symbols) {
+    fetch.get({
+      url: 'https://quotes.wsj.com/AU/XASX/'+symbol+'/financials/annual/'+pages[1],
     }, (err, res, body) => {
       if (err) {
         console.log('Error:', err)
@@ -148,20 +144,14 @@ app.use(function (request, response, next) {
             var multiplier = 1
         }
         
-        
-        
         fcf = parseInt($('td:contains("Free Cash Flow")').first().parent().children().eq(1).text().replace(/[^0-9]/g, ''))*multiplier || 0
+              
+        
+        console.log(st,lt,fcf)
         next()
       }
-    })
-  
-  data[symbol] = (st+lt)/fcf
-  
-  
-  
-  //} else {
-  //  next()
-  //}
+    }) 
+  }
 })
 
 
