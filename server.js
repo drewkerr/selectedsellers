@@ -20,6 +20,8 @@ let CSL = new Company("CSL", 0, 0, 0);
 
 
 
+
+
 class Company {
   constructor(symbol, st, lt, fcf){
     this.symbol = symbol;
@@ -41,7 +43,9 @@ class Company {
   }
 
   set st(value) {
-    value = getData(this.symbol, pages(0), indicators(0)) = value;
+    value = app.getData(this.symbol, pages(0), indicators(0));
+    console.log(value);
+    this._st = value; 
   }
   
   get lt() {
@@ -49,7 +53,8 @@ class Company {
   }
 
   set lt(value) {
-    getData(this.symbol, pages(0), indicators(1)) = value;
+    value = app.getData(this.symbol, pages(0), indicators(1));
+    this._lt = value;
   }
   
   get fcf() {
@@ -57,6 +62,7 @@ class Company {
   }
 
   set fcf(value) {
+    value = app.getData(this.symbol, pages(1), indicators(2));
     this._fcf = value;
   }
 }
@@ -95,7 +101,7 @@ app.getData(function (symbol, page, indicator){
 
 })
 
-
+/*
 app.use(function (request, response, next) {
   //if (! data.length) {
   for (let symbol of symbols) {
@@ -132,6 +138,7 @@ app.use(function (request, response, next) {
   //  next()
   //}
 })
+*/
 
 app.get('/', function (request, response) {
   response.render('index', {data: data})
