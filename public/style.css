@@ -1,11 +1,17 @@
 body {
-  font-family: ans-serif;
+  font-family: sans-serif;
   margin: 2em;
 }
 
-td, th {
-  border: 1px solid black;
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
 }
-td {
+
+tbody tr:nth-child(odd) {
+  background-color: #eee;
+}
+th, td {
+  padding: 0.25em 1em;
   text-align: right;
 }

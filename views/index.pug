@@ -20,7 +20,7 @@ html
             td= sym
             each headers, page in ids
               each title, id in headers
-                td= val[id]
+                td= val[id].toLocaleString('en', {useGrouping:true})
     block scripts
       script(src="https://code.jquery.com/jquery-2.2.1.min.js")
       script(src="/client.js")

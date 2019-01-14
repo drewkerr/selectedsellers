@@ -13,7 +13,7 @@ var identifiers = { 'balance-sheet': { st: 'ST Debt & Current Portion LT Debt', 
                     'cash-flow': { fcf: 'Free Cash Flow' } }
 
 app.use(function (request, response, next) {
-  if (!data) {
+  if (!data.length) {
     var promises = []
     for (let symbol of symbols) {
       data[symbol] = {}
