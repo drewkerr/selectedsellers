@@ -16,8 +16,15 @@ var lt = 0;
 var fcf = 0;
 
 for (let symbol of symbols)
-  symbol[0][0] = symbol
-  symbol[0
+  data[0][0] = symbol
+  data[0][1][0] = "Short-term Debt and Current Portion Long-term Debt"
+  data[0][1][1] = st
+  data[0][2][0] = "Long-term Debt"
+  data[0][2][1] = lt
+  data[0][2][0] = "Free Cash Flow"
+  data[0][3][1] = fcf
+  data[0][2][0] = "Debt / Free Cash Flow"
+  data[0][4][1] = (st + lt) / fcf
 
 
 /*
