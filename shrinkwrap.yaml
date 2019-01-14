@@ -3,6 +3,7 @@ dependencies:
   express: 4.16.4
   pug: 2.0.3
   request: 2.88.0
+  request-promise: 4.2.2
 packages:
   /@types/babel-types/7.0.4:
     dev: false
@@ -121,6 +122,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-pDAdOJtqQ/m2f/PKEaP2Y342Dp4=
+  /bluebird/3.5.3:
+    dev: false
+    resolution:
+      integrity: sha512-/qKPUQlaW1OyR51WeCPBvRnAlnZFUJkCSG5HzGnuIqhgyJtF+T94lFnn33eiazjRm2LAHVy2guNnaq48X9SJuw==
   /body-parser/1.18.3:
     dependencies:
       bytes: 3.0.0
@@ -563,6 +568,12 @@ packages:
     dev: false
     resolution:
       integrity: sha1-Yzwsg+PaQqUC9SRmAiSA9CCCYd4=
+  /ip-regex/3.0.0:
+    dev: false
+    engines:
+      node: '>=8'
+    resolution:
+      integrity: sha512-T8wDtjy+Qf2TAPDQmBp0eGKJ8GavlWlUnamr3wRn6vvdZlKVuJXXMlSncYFRYgVHOM3If5NR1H4+OvVQU9Idvg==
   /ipaddr.js/1.8.0:
     dev: false
     engines:
@@ -962,6 +973,29 @@ packages:
       node: '>=0.10'
     resolution:
       integrity: sha1-jcrkcOHIirwtYA//Sndihtp15jc=
+  /request-promise-core/1.1.1:
+    dependencies:
+      lodash: 4.17.11
+    dev: false
+    engines:
+      node: '>=0.10.0'
+    peerDependencies:
+      request: ^2.34
+    resolution:
+      integrity: sha1-Pu4AssWqgyOc+wTFcA2jb4HNCLY=
+  /request-promise/4.2.2:
+    dependencies:
+      bluebird: 3.5.3
+      request-promise-core: 1.1.1
+      stealthy-require: 1.1.1
+      tough-cookie: 3.0.0
+    dev: false
+    engines:
+      node: '>=0.10.0'
+    peerDependencies:
+      request: ^2.34
+    resolution:
+      integrity: sha1-0epG1lSm7k+O5qT+oQGMIpEZBLQ=
   /request/2.88.0:
     dependencies:
       aws-sign2: 0.7.0
@@ -1087,6 +1121,12 @@ packages:
       node: '>= 0.6'
     resolution:
       integrity: sha1-Fhx9rBd2Wf2YEfQ3cfqZOBR4Yow=
+  /stealthy-require/1.1.1:
+    dev: false
+    engines:
+      node: '>=0.10.0'
+    resolution:
+      integrity: sha1-NbCYdbT/SfJqd35QmzCQoyJr8ks=
   /string_decoder/1.2.0:
     dependencies:
       safe-buffer: 5.1.2
@@ -1112,6 +1152,16 @@ packages:
       node: '>=0.8'
     resolution:
       integrity: sha512-Q5srk/4vDM54WJsJio3XNn6K2sCG+CQ8G5Wz6bZhRZoAe/+TxjWB/GlFAnYEbkYVlON9FMk/fE3h2RLpPXo4lQ==
+  /tough-cookie/3.0.0:
+    dependencies:
+      ip-regex: 3.0.0
+      psl: 1.1.31
+      punycode: 2.1.1
+    dev: false
+    engines:
+      node: '>=6'
+    resolution:
+      integrity: sha512-LHMvg+RBP/mAVNqVbOX8t+iJ+tqhBA/t49DuI7+IDAWHrASnesqSu1vWbKB7UrE2yk+HMFUBMadRGMkB4VCfog==
   /tunnel-agent/0.6.0:
     dependencies:
       safe-buffer: 5.1.2
@@ -1233,3 +1283,4 @@ specifiers:
   express: ^4.16.4
   pug: ^2.0.3
   request: ^2.88.0
+  request-promise: ^4.2.2

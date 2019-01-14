@@ -6,9 +6,9 @@ app.locals.pretty = true;
 app.set('json spaces', 2)
 const cheerio = require('cheerio')
 
-var fetch = require('request')
+var fetch = require('request-promise')
 var data = {}
-var symbols = ['BKW','CSL']
+var symbols = ['BKW','CSL','TGR']
 var identifiers = { 'balance-sheet': { st: 'ST Debt & Current Portion LT Debt', lt: 'Long-Term Debt' },
                     'cash-flow': { fcf: 'Free Cash Flow' } }
 
@@ -35,7 +35,7 @@ app.use(function (request, response, next) {
           }
 
           for (let id in identifiers[page]) {
-            data[symbol][id] = parseInt($('td:contains("'+identifiers[page][id]+'")').first().parent().children().eq(1).text().replace(/[^0-9]/g, ''))*multiplier || 0
+            data[symbol][id] = parseInt($('td:contains("'+identifiers[page][id]+'")').first().parent().children().eq(1).text().replace(/[^0-9.]/g, ''))*multiplier || 0
             console.log(symbol,identifiers[page][id],data[symbol][id])
           }
           

@@ -13,7 +13,8 @@
     "express": "^4.16.4",
     "pug": "^2.0.3",
     "request": "^2.88.0",
-    "cheerio": "^0.22.0"
+    "cheerio": "^0.22.0",
+    "request-promise": "^4.2.2"
   },
   "engines": {
     "node": "8.x"
