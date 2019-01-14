@@ -10,7 +10,7 @@ const cheerio = require('cheerio')
 var fetch = require('request')
 var data = {}
 var symbols = ['BKW','CSL']
-var pages = ['balance-sheet','cash-flow']
+/*var pages = ['balance-sheet','cash-flow']
 var indicators = ['ST Debt & Current Portion LT Debt','Long-Term Debt', 'Free Cash Flow' ]
 var st = (pages[0], indicators[0]);
 var lt = (pages[0], indicators[1]);
@@ -27,7 +27,7 @@ for (let symbol of symbols)
   data[0][3][0] = "Free Cash Flow"
   data[0][3][1] = fcf
   data[0][4][0] = "Debt / Free Cash Flow"
-  data[0][4][1] = "(st + lt) / fcf"
+  data[0][4][1] = "(st + lt) / fcf"*/
 
 /*
 class Company {
@@ -77,8 +77,7 @@ class Company {
 
 */
 
-/*
-app.getData(function (symbol, page, indicator){
+/*app.getData(function (symbol, page, indicator){
     
     fetch.get({
       url: 'https://quotes.wsj.com/AU/XASX/'+symbol+'/financials/annual/'+page,
@@ -102,10 +101,7 @@ app.getData(function (symbol, page, indicator){
         return temp;
       }
     })
-})
-*/
-
-/*
+})*/
 
 app.use(function (request, response, next) {
   //if (! data.length) {
@@ -137,39 +133,6 @@ app.use(function (request, response, next) {
     }) 
   }
 })
-
-app.use2(function (request, response, next) {
-  //if (! data.length) {
-  for (let symbol of symbols) {
-    fetch.get({
-      url: 'https://quotes.wsj.com/AU/XASX/'+symbol+'/financials/annual/'+pages[1],
-    }, (err, res, body) => {
-      if (err) {
-        console.log('Error:', err)
-      } else if (res.statusCode !== 200) {
-        console.log('Status:', res.statusCode)
-      } else {
-        console.log('Data loaded')
-        const $ = cheerio.load(body)
-        switch($('.fiscalYr').eq(1).text()) {
-          case "All values AUD Millions.":
-            var multiplier = 1000000
-            break
-          default:
-            var multiplier = 1
-        }
-        
-        fcf = parseInt($('td:contains("Free Cash Flow")').first().parent().children().eq(1).text().replace(/[^0-9]/g, ''))*multiplier || 0
-              
-        
-        console.log(st,lt,fcf)
-        next()
-      }
-    }) 
-  }
-})
-
-*/
 
 app.get('/', function (request, response) {
   response.render('index', {data: data})
