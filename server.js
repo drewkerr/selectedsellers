@@ -16,6 +16,8 @@ var st = (pages[0], indicators[0]);
 var lt = (pages[0], indicators[1]);
 var fcf = (pages[1], indicators[2]);
 
+Function(symbol, page, indicator)
+
 for (let symbol of symbols)
   data[0] = symbol
   data[0][1][0] = "Short-term Debt and Current Portion Long-term Debt"
