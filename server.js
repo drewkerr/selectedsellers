@@ -45,9 +45,9 @@ app.use(function (request, response, next) {
           }
 
           for (let id in identifiers[page]) {
-
-            data[symbol][id] = parseInt($('td:contains("'+identifiers[page][id]+'")').first().parent().children().eq(1).text().replace(/[^0-9.]/g, ''))*multiplier || 0
-            console.log(symbol,identifiers[page][id],data[symbol][id])
+            var number = $('td:contains("'+identifiers[page][id]+'")').first().parent().children().eq(1).text()
+            data[symbol][id] = parseFloat(number.replace(/[(]/,'-').replace(/[,]/g,''))*multiplier || 0
+            console.log(symbol,identifiers[page][id],data[symbol][id],number,multiplier)
           }
         }
       }))
