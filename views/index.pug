@@ -9,10 +9,11 @@ html
   body
     block content
       table
-        each val, key in data 
+        each val, sym in data
           tr
-            td= key
-            td= val
+            td= sym
+            each id in val
+            td= id
     block scripts
       script(src="https://code.jquery.com/jquery-2.2.1.min.js")
       script(src="/client.js")
