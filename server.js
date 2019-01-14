@@ -15,6 +15,10 @@ var st = 0;
 var lt = 0;
 var fcf = 0;
 
+for (let symbol of symbols)
+  symbol[0][0] = symbol
+  symbol[0
+
 
 /*
 class Company {
