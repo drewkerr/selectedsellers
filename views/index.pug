@@ -15,12 +15,13 @@ html
             each headers, page in ids
               each title, id in headers
                 th= title
-        each val, sym in data
+        - var order = Object.keys(data).sort(function(a,b){return data[a]['dfcf']-data[b]['dfcf']})
+        each symbol in order
           tr
-            td= sym
+            td= symbol
             each headers, page in ids
               each title, id in headers
-                td= val[id].toLocaleString('en', {useGrouping:true})
+                td= data[symbol][id].toLocaleString('en', {useGrouping:true})
     block scripts
       script(src="https://code.jquery.com/jquery-2.2.1.min.js")
       script(src="/client.js")
