@@ -8,7 +8,7 @@ const cheerio = require('cheerio')
 
 var fetch = require('request-promise')
 var data = {}
-var symbols = ['BKW','CSL','SNZ','CCL','EMB','FNP','TGR']
+var symbols = ['BKW','CSL','SNZ','CCL','EMB','FNP','TGR','ALK','WAM']
 var identifiers = { 'balance-sheet': { st: 'ST Debt & Current Portion LT Debt', lt: 'Long-Term Debt' },
                     'cash-flow': { fcf: 'Free Cash Flow' } }
 
