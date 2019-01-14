@@ -17,14 +17,11 @@ html
                 th= title
         - var order = Object.keys(data).sort(function(a,b){return (data[a]['fcf']<0)-(data[b]['fcf']<0) || data[a]['dfcf']-data[b]['dfcf']})
         each symbol in order
-          tr
+          #{data[symbol]['fcf'] < 0 ? 'td.red' : 'tr'}
             td= symbol
             each headers, page in ids
               each title, id in headers
-                - var number = data[symbol][id].toLocaleString('en', {useGrouping:true})
-                if number < 0
-                  td.red= number
-                else
+                td= data[symbol][id].toLocaleString('en', {useGrouping:true})
     block scripts
       script(src="https://code.jquery.com/jquery-2.2.1.min.js")
       script(src="/client.js")
