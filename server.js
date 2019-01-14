@@ -12,9 +12,6 @@ var data = {}
 var symbols = ['BKW','CSL']
 var pages = ['balance-sheet','cash-flow']
 var indicators = ['ST Debt & Current Portion LT Debt','Long-Term Debt', 'Free Cash Flow' ]
-var st = null;
-var lt = null;
-var fcf = null;
 
 for (let symbol of symbols)
   data[0] = symbol
@@ -170,7 +167,6 @@ app.use2(function (request, response, next) {
 
 */
 
-/*
 app.get('/', function (request, response) {
   response.render('index', {data: data})
 })
@@ -182,5 +178,3 @@ app.get('/json', function (request, response) {
 var listener = app.listen(process.env.PORT, function () {
   console.log('Your app is listening on port ' + listener.address().port)
 })
-
-*/
