@@ -47,7 +47,7 @@ app.use(function (request, response, next) {
 })
 
 app.get('/', function (request, response) {
-  response.render('index', {data: data})
+  response.render('index', {data: data, ids: identifiers})
 })
 
 app.get('/json', function (request, response) {

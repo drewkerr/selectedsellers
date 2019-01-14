@@ -9,11 +9,18 @@ html
   body
     block content
       table
+        thead
+          tr
+            th
+            each headers, page in ids
+              each title, id in headers
+                th= title
         each val, sym in data
           tr
             td= sym
-            each id in val
-            td= id
+            each headers, page in ids
+              each title, id in headers
+                td= val[id]
     block scripts
       script(src="https://code.jquery.com/jquery-2.2.1.min.js")
       script(src="/client.js")
