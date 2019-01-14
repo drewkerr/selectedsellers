@@ -8,7 +8,7 @@ const cheerio = require('cheerio')
 
 var fetch = require('request-promise')
 var data = {}
-var symbols = ['BKW','CSL','TGR']
+var symbols = ['BKW','CSL','TGR','SNZ']
 var identifiers = { 'balance-sheet': { st: 'ST Debt & Current Portion LT Debt', lt: 'Long-Term Debt' },
                     'cash-flow': { fcf: 'Free Cash Flow' } }
 
@@ -31,11 +31,21 @@ app.use(function (request, response, next) {
             case "All values AUD Millions.":
               var multiplier = 1000000
               break
-            default:
+            case "All values NZD Millions.":
+              var multiplier = 1000000
+              break
+            case "All values AUD Thousands.":
               var multiplier = 1000
+              break
+            case "All values NZD Thousands.":
+              var multiplier = 1000
+              break
+            default:
+              var multiplier = 1
           }
 
           for (let id in identifiers[page]) {
+
             data[symbol][id] = parseInt($('td:contains("'+identifiers[page][id]+'")').first().parent().children().eq(1).text().replace(/[^0-9.]/g, ''))*multiplier || 0
             console.log(symbol,identifiers[page][id],data[symbol][id])
           }
@@ -45,8 +55,9 @@ app.use(function (request, response, next) {
   }
   Promise.all(promises).then(function() {
     for (let symbol of symbols) {
-      data[symbol][
+      data[symbol]['dfcf'] = ((data[symbol]['st']+data[symbol]['lt'])/data[symbol]['fcf']).toFixed(2);
     }
+    identifiers['cash-flow']['dfcf'] = "Debt / Free Cash Flow"
     next()
   })
 })
