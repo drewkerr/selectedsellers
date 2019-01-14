@@ -14,33 +14,34 @@ var identifiers = { 'balance-sheet': { st: 'ST Debt & Current Portion LT Debt', 
 
 app.use(function (request, response, next) {
   for (let symbol of symbols) {
-    for (let page of identifiers) {
-      
-    fetch.get({
-      url: 'https://quotes.wsj.com/AU/XASX/'+symbol+'/financials/annual/balance-sheet',
-    }, (err, res, body) => {
-      if (err) {
-        console.log('Error:', err)
-      } else if (res.statusCode !== 200) {
-        console.log('Status:', res.statusCode)
-      } else {
-        console.log('Loaded',symbol)
-        const $ = cheerio.load(body)
-        switch($('.fiscalYr').eq(1).text()) {
-          case "All values AUD Millions.":
-            var multiplier = 1000000
-            break
-          default:
-            var multiplier = 1
+    for (let page in identifiers) {
+      fetch.get({
+        url: 'https://quotes.wsj.com/AU/XASX/'+symbol+'/financials/annual/'+page,
+      }, (err, res, body) => {
+        if (err) {
+          console.log('Error:', err)
+        } else if (res.statusCode !== 200) {
+          console.log('Status:', res.statusCode)
+        } else {
+          console.log('Loaded',symbol)
+          const $ = cheerio.load(body)
+          switch($('.fiscalYr').eq(1).text()) {
+            case "All values AUD Millions.":
+              var multiplier = 1000000
+              break
+            default:
+              var multiplier = 1
+          }
+
+          for (let id in identifiers[page]) {
+            var result = parseInt($('td:contains("'+page[id]+'")').first().parent().children().eq(1).text().replace(/[^0-9]/g, ''))*multiplier || 0
+            console.log(symbol,page,id,result)
+          }
+          
+          next()
         }
-        
-        var st = parseInt($('td:contains("ST Debt & Current Portion LT Debt")').first().parent().children().eq(1).text().replace(/[^0-9]/g, ''))*multiplier || 0
-        var lt = parseInt($('td:contains("Long-Term Debt")').first().parent().children().eq(1).text().replace(/[^0-9]/g, ''))*multiplier || 0      
-        
-        //console.log(st,lt,data)
-        next()
-      }
-    }) 
+      })
+    }
   }
 })
 
