@@ -15,7 +15,7 @@ html
             each headers, page in ids
               each title, id in headers
                 th= title
-        - var order = Object.keys(data).sort(function(a,b){return data[a]['dfcf']-data[b]['dfcf']})
+        - var order = Object.keys(data).sort(function(a,b){return (data[a]['dfcf']<0)-(data[b]['dfcf']<0) || data[a]['dfcf']-data[b]['dfcf']})
         each symbol in order
           tr
             td= symbol
