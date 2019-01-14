@@ -9,10 +9,13 @@ const cheerio = require('cheerio')
 var fetch = require('request')
 var data = {}
 var symbols = ['BKW','CSL']
+var identifiers = { 'balance-sheet': { st: 'ST Debt & Current Portion LT Debt', lt: 'Long-Term Debt' },
+                    'cash-flow': { fcf: 'Free Cash Flow' } }
 
 app.use(function (request, response, next) {
-  //if (! data.length) {
   for (let symbol of symbols) {
+    for (let page of identifiers) {
+      
     fetch.get({
       url: 'https://quotes.wsj.com/AU/XASX/'+symbol+'/financials/annual/balance-sheet',
     }, (err, res, body) => {
@@ -21,7 +24,7 @@ app.use(function (request, response, next) {
       } else if (res.statusCode !== 200) {
         console.log('Status:', res.statusCode)
       } else {
-        console.log('Data loaded')
+        console.log('Loaded',symbol)
         const $ = cheerio.load(body)
         switch($('.fiscalYr').eq(1).text()) {
           case "All values AUD Millions.":
