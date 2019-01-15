@@ -99,7 +99,7 @@ var symbols = [
 'CPU',
 'AIS',
 'QAN',
-*/
+
 'SPK',
 'SEK',
 'ALL',
@@ -120,7 +120,7 @@ var symbols = [
 'AZJ',
 'ORA',
 'STO',
-/*
+*/
 'MYX',
 'TPM',
 'ALQ',
