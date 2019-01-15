@@ -204,7 +204,7 @@ var symbols = [
 'IFL',
 'PPT',
 'BKW',
-*/
+
 'RMS',
 'TNE',
 'RRL',
@@ -225,7 +225,7 @@ var symbols = [
 'ALX',
 'AVN',
 'AWC',
-/*
+*/
 'CLW',
 'CSR',
 'HTA',
@@ -233,7 +233,7 @@ var symbols = [
 'JHG',
 'NEC',
 'PLS'
-*/]
+]
 var identifiers = { 'balance-sheet': { st: 'ST Debt & Current Portion LT Debt', lt: 'Long-Term Debt' },
                     'cash-flow': { fcf: 'Free Cash Flow' } }
 
