@@ -93,7 +93,7 @@ var symbols = [
 'MYO',
 'MMS',
 'IRE',
-
+*/
 'ABC',
 'CPU',
 'AIS',
@@ -114,7 +114,7 @@ var symbols = [
 'ORI',
 'SHL',
 'RIC',
-
+/*
 'DLX',
 'AZJ',
 'ORA',
@@ -231,7 +231,7 @@ var symbols = [
 'JHG',
 'NEC',
 'PLS'
-]
+*/]
 var identifiers = { 'balance-sheet': { st: 'ST Debt & Current Portion LT Debt', lt: 'Long-Term Debt' },
                     'cash-flow': { fcf: 'Free Cash Flow' } }
 
