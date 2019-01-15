@@ -46,7 +46,6 @@ var symbols = [
 'GRR',
 'SOL',
 'FLT',
-  
 'SDI',
 'RND',
 'MTS',
