@@ -54,7 +54,6 @@ var symbols = [
 'SGM',  
 'WHC',
 'EVN',
-*/
 'COH',
 'KMD',
 'ILU',
@@ -79,7 +78,7 @@ var symbols = [
 'PMV',
 'SIQ',
 'AGL',
-  /*
+  */
 'BHP',
 'BPT',
 'OGC',
@@ -100,7 +99,7 @@ var symbols = [
 'CPU',
 'AIS',
 'QAN',
-
+/*
 'SPK',
 'SEK',
 'ALL',
@@ -121,7 +120,7 @@ var symbols = [
 'AZJ',
 'ORA',
 'STO',
-
+/*
 'MYX',
 'TPM',
 'ALQ',
@@ -142,7 +141,7 @@ var symbols = [
 'IVC',
 'TWE',
 'C6C',
-
+/*
 'BXB',
 'EVT',
 'ORG',
@@ -163,7 +162,7 @@ var symbols = [
 'VAH',
 'AIA',
 'NAB',
-
+/*
 'ANZ',
 'QBE',
 'WBC',
@@ -184,6 +183,7 @@ var symbols = [
 'GMG',
 'GOZ',
 'IAG',
+/*
 'LLC',
 'MFG',
 'MGR',
@@ -204,6 +204,7 @@ var symbols = [
 'IFL',
 'PPT',
 'BKW',
+/*
 'RMS',
 'TNE',
 'RRL',
@@ -224,6 +225,7 @@ var symbols = [
 'ALX',
 'AVN',
 'AWC',
+/*
 'CLW',
 'CSR',
 'HTA',
