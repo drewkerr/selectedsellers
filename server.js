@@ -9,6 +9,7 @@ const cheerio = require('cheerio')
 var fetch = require('request-promise')
 var data = {}
 var symbols = [
+  /*
 'JHX',
 'AMP',
 'HSO',
@@ -23,6 +24,7 @@ var symbols = [
 'NXT',
 'FNP',
 'BRU',
+*/
 'ALK',
 'ALU',
 'NWL',
@@ -33,6 +35,7 @@ var symbols = [
 'A2M',
 'MGX',
 'CUE',
+  
 'SBM',
 'SAR',
 'SFR',
@@ -43,16 +46,19 @@ var symbols = [
 'GRR',
 'SOL',
 'FLT',
+  
 'SDI',
 'RND',
 'MTS',
 'BRG',
-'SGM',
+'SGM',  
 'WHC',
 'EVN',
+/*
 'COH',
 'KMD',
 'ILU',
+
 'UNV',
 'S32',
 'MND',
@@ -219,7 +225,8 @@ var symbols = [
 'IPH',
 'JHG',
 'NEC',
-'PLS']
+'PLS'
+*/]
 var identifiers = { 'balance-sheet': { st: 'ST Debt & Current Portion LT Debt', lt: 'Long-Term Debt' },
                     'cash-flow': { fcf: 'Free Cash Flow' } }
 
