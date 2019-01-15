@@ -31,6 +31,7 @@ var symbols = [
 'OZL',
 'PME',
 'REH',
+
 'TWD',
 'A2M',
 'MGX',
@@ -77,7 +78,7 @@ var symbols = [
 'PMV',
 'SIQ',
 'AGL',
-  */
+
 'BHP',
 'BPT',
 'OGC',
@@ -98,7 +99,7 @@ var symbols = [
 'CPU',
 'AIS',
 'QAN',
-/*
+*/
 'SPK',
 'SEK',
 'ALL',
