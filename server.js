@@ -141,7 +141,7 @@ var symbols = [
 'IVC',
 'TWE',
 'C6C',
-/*
+*/
 'BXB',
 'EVT',
 'ORG',
