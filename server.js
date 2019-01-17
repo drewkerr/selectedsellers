@@ -9,6 +9,7 @@ const cheerio = require('cheerio')
 var fetch = require('request-promise')
 var data = {}
 var symbols = [
+  'CHC','TWD','SUL','IVC','SHL','BKW'
   /*
 'JHX',
 'AMP',
@@ -93,7 +94,7 @@ var symbols = [
 'MYO',
 'MMS',
 'IRE',
-*/
+
 'ABC',
 'CPU',
 'AIS',
@@ -114,7 +115,7 @@ var symbols = [
 'ORI',
 'SHL',
 'RIC',
-/*
+
 'DLX',
 'AZJ',
 'ORA',
