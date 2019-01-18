@@ -239,6 +239,7 @@ var identifiers = { 'balance-sheet': { st: 'ST Debt & Current Portion LT Debt', 
 app.use(function (request, response, next) {
   var promises = []
   for (let symbol of symbols) {
+    // only fetch if not already in data
     if (!(symbol in data)) {
       data[symbol] = {}
       for (let page in identifiers) {
@@ -252,6 +253,7 @@ app.use(function (request, response, next) {
           } else {
             console.log('Loaded',symbol,page)
             const $ = cheerio.load(body)
+            // check for multiplier note in page
             switch($('.fiscalYr').eq(1).text().split(' ').pop()) {
               case "Millions.":
                 var multiplier = 1000000
@@ -262,7 +264,7 @@ app.use(function (request, response, next) {
               default:
                 var multiplier = 1
             }
-
+            // extract data from page
             for (let id in identifiers[page]) {
               var number = $('td:contains("'+identifiers[page][id]+'")').first().parent().children().eq(1).text()
               data[symbol][id] = parseFloat(number.replace(/[(]/,'-').replace(/[,]/g,''))*multiplier || 0
@@ -271,21 +273,22 @@ app.use(function (request, response, next) {
           }
         }))
       }
-    }
-    Promise.all(promises).then(function() {
-      for (let symbol of symbols) {
-        data[symbol]['dfcf'] = ((data[symbol]['st']+data[symbol]['lt'])/data[symbol]['fcf']).toFixed(2);
-      }
-      identifiers['cash-flow']['dfcf'] = "Debt / Free Cash Flow"
-      next()
-    })
     } else {
       next()
     }
   }
+  Promise.all(promises).then(function() {
+    // calculate DFCF once all data is retrieved
+    for (let symbol of symbols) {
+      data[symbol]['dfcf'] = ((data[symbol]['st']+data[symbol]['lt'])/data[symbol]['fcf']).toFixed(2);
+    }
+    identifiers['cash-flow']['dfcf'] = "Debt / Free Cash Flow"
+    next()
+  })
 })
 
 app.get('/', function (request, response) {
+  // serve
   response.render('index', {data: data, ids: identifiers})
 })
 
