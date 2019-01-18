@@ -114,9 +114,11 @@ app.get('/', function (request, response) {
 })
 
 app.get('/json', function (request, response) {
+  // serve data in JSON format
   response.json(data);
 })
 
+// Start server
 var listener = app.listen(process.env.PORT, function () {
   console.log('Your app is listening on port ' + listener.address().port)
 })
