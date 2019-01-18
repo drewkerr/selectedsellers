@@ -253,7 +253,7 @@ app.use(function (request, response, next) {
             console.log('Status:', res.statusCode)
           } else {
             const $ = cheerio.load(body)
-            if ($('h1').eq(1).text() != 'Company Not Found') {
+            if ($('h1').eq(0).text() != 'Company Not Found') {
               console.log('Loaded',symbol,page)
               // check for multiplier note in page
               switch ($('.fiscalYr').eq(1).text().split(' ').pop()) {
@@ -285,7 +285,11 @@ app.use(function (request, response, next) {
   Promise.all(promises).then(function() {
     // calculate DFCF once all data is retrieved
     for (let symbol of symbols) {
-      data[symbol]['dfcf'] = ((data[symbol]['st']+data[symbol]['lt'])/data[symbol]['fcf']).toFixed(2);
+      if ('st' in data[symbol] && 'lt' in data[symbol] && 'fcf' in data[symbol]) {
+        data[symbol]['dfcf'] = ((data[symbol]['st']+data[symbol]['lt'])/data[symbol]['fcf']).toFixed(2)
+      } else {
+        delete data[symbol]
+      }
     }
     identifiers['cash-flow']['dfcf'] = "Debt / Free Cash Flow"
     next()
