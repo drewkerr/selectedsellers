@@ -34,7 +34,7 @@ var identifiers = { 'balance-sheet': { st: 'ST Debt & Current Portion LT Debt', 
 var symbols = require('./symbols.json')
 for (let symbol in data) {
   console.log(symbol)
-  if (!(symbol in symbols)) {
+  if (!(symbol.name in symbols)) {
     delete data[symbol]
     console.log('Deleting old symbol',symbol)
   }
