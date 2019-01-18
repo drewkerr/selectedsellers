@@ -1,5 +1,14 @@
-[
-  'CHC','TWD','SUL','IVC','SHL','BKW','POO'
+{
+  symbols: [
+  'CHC',
+  'TWD',
+  'SUL',
+  'IVC',
+  'SHL',
+  'BKW',
+  'POO'
+  ]
+}
   /*
 'JHX',
 'AMP',
@@ -21,7 +30,6 @@
 'OZL',
 'PME',
 'REH',
-
 'TWD',
 'A2M',
 'MGX',
@@ -42,7 +50,6 @@
 'BRG',
 'SGM',  
 'WHC',
-
 'EVN',
 'COH',
 'KMD',
@@ -63,7 +70,6 @@
 'RIO',
 'WES',
 'CLH',
-
 'BKL',
 'PMV',
 'SIQ',
@@ -84,7 +90,6 @@
 'MYO',
 'MMS',
 'IRE',
-
 'ABC',
 'CPU',
 'AIS',
@@ -105,7 +110,6 @@
 'ORI',
 'SHL',
 'RIC',
-
 'DLX',
 'AZJ',
 'ORA',
@@ -126,7 +130,6 @@
 'BGA',
 'CCL',
 'AMC',
-
 'CWY',
 'IVC',
 'TWE',
@@ -147,7 +150,6 @@
 'YAL',
 'AST',
 'APA',
-
 'QUB',
 'VAH',
 'AIA',
@@ -168,7 +170,6 @@
 'CMW',
 'CQR',
 'CYB',
-
 'DXS',
 'GMG',
 'GOZ',
@@ -189,7 +190,6 @@
 'VCX',
 'VVR',
 'WAM',
-
 'GPT',
 'IFL',
 'PPT',
@@ -210,7 +210,6 @@
 'LYC',
 'OSH',
 'FMG',
-
 'CGC',
 'ALX',
 'AVN',
@@ -222,4 +221,4 @@
 'JHG',
 'NEC',
 'PLS'
-*/]
+*/

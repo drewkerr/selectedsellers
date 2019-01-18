@@ -2,18 +2,17 @@
 var fs = require('fs')
 try {
   var data = require('./data.json')
-  console.log(Object.keys(data).length + ' symbols loaded.')
+  console.log(Object.keys(data).length,'symbols loaded.')
 } catch(e) {
   var data = {}
-  console.log('Symbols reset: ' + e)
+  console.log('Symbols reset:',e)
 }
-
 process.on('SIGTERM', function() {
   fs.writeFile('db.json', JSON.stringify(data), function(e) {
     if (e) {
       console.log(e)
     } else {
-      console.log(Object.keys(data).length + ' symbols saved.')
+      console.log(Object.keys(data).length,'symbols saved.')
     }
     process.exit(0)
   })
