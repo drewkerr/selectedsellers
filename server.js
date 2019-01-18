@@ -26,16 +26,21 @@ app.set('view engine', 'pug')
 app.locals.pretty = true;
 app.set('json spaces', 2)
 const cheerio = require('cheerio')
-
 var fetch = require('request-promise')
-var symbols = require('./symbols.json')
+
 var identifiers = { 'balance-sheet': { st: 'ST Debt & Current Portion LT Debt', lt: 'Long-Term Debt' },
                     'cash-flow': { fcf: 'Free Cash Flow' } }
+
+var symbols = require('./symbols.json')
+for (let symbol in data) {
+  if (!datum in symbols)) {
+    delete data[symbol]
+    
 
 app.use(function (request, response, next) {
   var promises = []
   for (let symbol of symbols) {
-    // only fetch if not already in data (resets when project is edited/reloaded)
+    // only fetch if not already in data
     if (!(symbol in data)) {
       data[symbol] = {}
       for (let page in identifiers) {
