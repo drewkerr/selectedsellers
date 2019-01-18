@@ -28,12 +28,15 @@ app.set('json spaces', 2)
 const cheerio = require('cheerio')
 var fetch = require('request-promise')
 
+// Data to grab from web
 var identifiers = { 'balance-sheet': { st: 'ST Debt & Current Portion LT Debt', lt: 'Long-Term Debt' },
                     'cash-flow': { fcf: 'Free Cash Flow' } }
 
+// Load list of symbols
 var symbols = require('./symbols.json')
+// Remove symbols from stored data if not in list
 for (let symbol in data) {
-  if (!(symbol in symbols)) {
+  if (!symbols.includes(symbol)) {
     delete data[symbol]
     console.log('Deleting old symbol',symbol)
   }
@@ -89,9 +92,10 @@ app.use(function (request, response, next) {
   // calculate DFCF once all data is retrieved
   Promise.all(promises).then(function() {
     for (let symbol of symbols) {
+      // if not already calculated
       if (!('dfcf' in data[symbol])) {
         if ('st' in data[symbol] && 'lt' in data[symbol] && 'fcf' in data[symbol]) {
-          data[symbol]['dfcf'] = ((data[symbol]['st']+data[symbol]['lt'])/data[symbol]['fcf']).toFixed(2)
+          data[symbol]['dfcf'] = ( ( data[symbol]['st'] + data[symbol]['lt'] ) / data[symbol]['fcf'] ).toFixed(2)
         } else {
           delete data[symbol]
         }
