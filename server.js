@@ -58,6 +58,7 @@ app.use(function (request, response, next) {
           } else if (res.statusCode !== 200) {
             console.log('Status:', res.statusCode)
           } else {
+            // load DOM parser (jQuery syntax)
             const $ = cheerio.load(body)
             // check symbol is valid
             if ($('h1').eq(0).text() != 'Company Not Found') {
@@ -73,9 +74,10 @@ app.use(function (request, response, next) {
                 default:
                   var multiplier = 1
               }
-              // extract data from page
               for (let id in identifiers[page]) {
+                // extract data from page using DOM parser
                 var number = $('td:contains("'+identifiers[page][id]+'")').first().parent().children().eq(1).text()
+                // remove non-numeric characters, brackets to negatives, convert to number and multiply or zero if empty
                 data[symbol][id] = parseFloat(number.replace(/[(]/,'-').replace(/[,]/g,''))*multiplier || 0
                 console.log(symbol,identifiers[page][id],data[symbol][id],number,multiplier)
               }
