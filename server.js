@@ -1,25 +1,25 @@
 // Load from and save to file
-
 var fs = require('fs')
 try {
-  var data = require('./db.json')
-  console.log(data.length + ' symbols loaded.')
+  var data = require('./data.json')
+  console.log(Object.keys(data).length + ' symbols loaded.')
 } catch(e) {
   var data = {}
   console.log('Symbols reset: ' + e)
 }
 
 process.on('SIGTERM', function() {
-  fs.writeFile('db.json', JSON.stringify(data), function(err) {
-    if (err) {
-      console.log(err)
+  fs.writeFile('db.json', JSON.stringify(data), function(e) {
+    if (e) {
+      console.log(e)
     } else {
-      console.log(data.length + ' tracks saved.')
+      console.log(Object.keys(data).length + ' symbols saved.')
     }
     process.exit(0)
   })
 })
 
+// Init server
 var express = require('express')
 var app = express()
 app.use(express.static('public'))
@@ -29,232 +29,7 @@ app.set('json spaces', 2)
 const cheerio = require('cheerio')
 
 var fetch = require('request-promise')
-var data = {}
-var symbols = [
-  'CHC','TWD','SUL','IVC','SHL','BKW','POO'
-  /*
-'JHX',
-'AMP',
-'HSO',
-'CNU',
-'SUN',
-'VEA',
-'SGR',
-'TGR',
-'BIN',
-'EMB',
-'APT',
-'NXT',
-'FNP',
-'BRU',
-'ALK',
-'ALU',
-'NWL',
-'OZL',
-'PME',
-'REH',
-
-'TWD',
-'A2M',
-'MGX',
-'CUE',  
-'SBM',
-'SAR',
-'SFR',
-'NHC',
-'WTC',
-'LMW',
-'NST',
-'GRR',
-'SOL',
-'FLT',
-'SDI',
-'RND',
-'MTS',
-'BRG',
-'SGM',  
-'WHC',
-
-'EVN',
-'COH',
-'KMD',
-'ILU',
-'UNV',
-'S32',
-'MND',
-'ARB',
-'CIM',
-'IGO',
-'TME',
-'BSE',
-'WEB',
-'BSL',
-'COL',
-'REA',
-'IEL',
-'RIO',
-'WES',
-'CLH',
-
-'BKL',
-'PMV',
-'SIQ',
-'AGL',
-'BHP',
-'BPT',
-'OGC',
-'NCM',
-'CTX',
-'HVN',
-'WOW',
-'MPL',
-'ING',
-'SUL',
-'NHF',
-'ZEL',
-'MIN',
-'MYO',
-'MMS',
-'IRE',
-
-'ABC',
-'CPU',
-'AIS',
-'QAN',
-'SPK',
-'SEK',
-'ALL',
-'NVT',
-'CSL',
-'GEM',
-'CAR',
-'LNK',
-'CWN',
-'DMP',
-'WOR',
-'BAP',
-'CEN',
-'ORI',
-'SHL',
-'RIC',
-
-'DLX',
-'AZJ',
-'ORA',
-'STO',
-'MYX',
-'TPM',
-'ALQ',
-'HLS',
-'ANN',
-'APX',
-'DOW',
-'CAT',
-'APE',
-'IPL',
-'CLX',
-'RHC',
-'DHG',
-'BGA',
-'CCL',
-'AMC',
-
-'CWY',
-'IVC',
-'TWE',
-'C6C',
-'BXB',
-'EVT',
-'ORG',
-'SKC',
-'PGH',
-'TCL',
-'VOC',
-'BLD',
-'SYD',
-'SVW',
-'RWC',
-'GNC',
-'TAH',
-'YAL',
-'AST',
-'APA',
-
-'QUB',
-'VAH',
-'AIA',
-'NAB',
-'ANZ',
-'QBE',
-'WBC',
-'CBA',
-'ABP',
-'ASX',
-'BEN',
-'BOQ',
-'BWP',
-'CCP',
-'CGF',
-'CHC',
-'CIN',
-'CMW',
-'CQR',
-'CYB',
-
-'DXS',
-'GMG',
-'GOZ',
-'IAG',
-'LLC',
-'MFG',
-'MGR',
-'MQG',
-'NSR',
-'PDL',
-'PTM',
-'SCG',
-'SCP',
-'SDF',
-'SGP',
-'SNZ',
-'URW',
-'VCX',
-'VVR',
-'WAM',
-
-'GPT',
-'IFL',
-'PPT',
-'BKW',
-'RMS',
-'TNE',
-'RRL',
-'XRO',
-'TBR',
-'FPH',
-'RMD',
-'TLS',
-'WPL',
-'SKI',
-'NUF',
-'CTD',
-'JBH',
-'LYC',
-'OSH',
-'FMG',
-
-'CGC',
-'ALX',
-'AVN',
-'AWC',
-'CLW',
-'CSR',
-'HTA',
-'IPH',
-'JHG',
-'NEC',
-'PLS'
-*/]
+var symbols = require('./symbols.json')
 var identifiers = { 'balance-sheet': { st: 'ST Debt & Current Portion LT Debt', lt: 'Long-Term Debt' },
                     'cash-flow': { fcf: 'Free Cash Flow' } }
 
