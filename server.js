@@ -1,4 +1,4 @@
-// Load from and save to file
+// Load data from and save to file
 var fs = require('fs')
 try {
   var data = require('./data.json')
@@ -8,7 +8,7 @@ try {
   console.log('Symbols reset:',e)
 }
 process.on('SIGTERM', function() {
-  fs.writeFile('db.json', JSON.stringify(data), function(e) {
+  fs.writeFile('./data.json', JSON.stringify(data), function(e) {
     if (e) {
       console.log(e)
     } else {
