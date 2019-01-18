@@ -243,6 +243,7 @@ app.use(function (request, response, next) {
     if (!(symbol in data)) {
       data[symbol] = {}
       for (let page in identifiers) {
+        // fetch data from web page
         promises.push(fetch.get({
           url: 'https://quotes.wsj.com/AU/XASX/'+symbol+'/financials/annual/'+page,
         }, (err, res, body) => {
@@ -251,24 +252,28 @@ app.use(function (request, response, next) {
           } else if (res.statusCode !== 200) {
             console.log('Status:', res.statusCode)
           } else {
-            console.log('Loaded',symbol,page)
             const $ = cheerio.load(body)
-            // check for multiplier note in page
-            switch($('.fiscalYr').eq(1).text().split(' ').pop()) {
-              case "Millions.":
-                var multiplier = 1000000
-                break
-              case "Thousands.":
-                var multiplier = 1000
-                break
-              default:
-                var multiplier = 1
-            }
-            // extract data from page
-            for (let id in identifiers[page]) {
-              var number = $('td:contains("'+identifiers[page][id]+'")').first().parent().children().eq(1).text()
-              data[symbol][id] = parseFloat(number.replace(/[(]/,'-').replace(/[,]/g,''))*multiplier || 0
-              console.log(symbol,identifiers[page][id],data[symbol][id],number,multiplier)
+            if ($('h1').eq(1).text() != 'Company Not Found') {
+              console.log('Loaded',symbol,page)
+              // check for multiplier note in page
+              switch ($('.fiscalYr').eq(1).text().split(' ').pop()) {
+                case "Millions.":
+                  var multiplier = 1000000
+                  break
+                case "Thousands.":
+                  var multiplier = 1000
+                  break
+                default:
+                  var multiplier = 1
+              }
+              // extract data from page
+              for (let id in identifiers[page]) {
+                var number = $('td:contains("'+identifiers[page][id]+'")').first().parent().children().eq(1).text()
+                data[symbol][id] = parseFloat(number.replace(/[(]/,'-').replace(/[,]/g,''))*multiplier || 0
+                console.log(symbol,identifiers[page][id],data[symbol][id],number,multiplier)
+              }
+            } else {
+              console.log('Invalid symbol',symbol)
             }
           }
         }))
@@ -288,7 +293,7 @@ app.use(function (request, response, next) {
 })
 
 app.get('/', function (request, response) {
-  // serve
+  // serve page using index.pug as template
   response.render('index', {data: data, ids: identifiers})
 })
 
