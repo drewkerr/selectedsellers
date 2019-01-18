@@ -237,9 +237,9 @@ var identifiers = { 'balance-sheet': { st: 'ST Debt & Current Portion LT Debt', 
                     'cash-flow': { fcf: 'Free Cash Flow' } }
 
 app.use(function (request, response, next) {
-  if (!data.length) {
-    var promises = []
-    for (let symbol of symbols) {
+  var promises = []
+  for (let symbol of symbols) {
+    if (!(symbol in data)) {
       data[symbol] = {}
       for (let page in identifiers) {
         promises.push(fetch.get({
@@ -279,8 +279,9 @@ app.use(function (request, response, next) {
       identifiers['cash-flow']['dfcf'] = "Debt / Free Cash Flow"
       next()
     })
-  } else {
-    next()
+    } else {
+      next()
+    }
   }
 })
 
