@@ -1,3 +1,25 @@
+// Load from and save to file
+
+var fs = require('fs')
+try {
+  var data = require('./db.json')
+  console.log(data.length + ' symbols loaded.')
+} catch(e) {
+  var data = {}
+  console.log('Symbols reset: ' + e)
+}
+
+process.on('SIGTERM', function() {
+  fs.writeFile('db.json', JSON.stringify(data), function(err) {
+    if (err) {
+      console.log(err)
+    } else {
+      console.log(data.length + ' tracks saved.')
+    }
+    process.exit(0)
+  })
+})
+
 var express = require('express')
 var app = express()
 app.use(express.static('public'))
@@ -239,7 +261,7 @@ var identifiers = { 'balance-sheet': { st: 'ST Debt & Current Portion LT Debt', 
 app.use(function (request, response, next) {
   var promises = []
   for (let symbol of symbols) {
-    // only fetch if not already in data
+    // only fetch if not already in data (resets when project is edited/reloaded)
     if (!(symbol in data)) {
       data[symbol] = {}
       for (let page in identifiers) {
@@ -253,6 +275,7 @@ app.use(function (request, response, next) {
             console.log('Status:', res.statusCode)
           } else {
             const $ = cheerio.load(body)
+            // check symbol is valid
             if ($('h1').eq(0).text() != 'Company Not Found') {
               console.log('Loaded',symbol,page)
               // check for multiplier note in page
@@ -282,13 +305,15 @@ app.use(function (request, response, next) {
       next()
     }
   }
+  // calculate DFCF once all data is retrieved
   Promise.all(promises).then(function() {
-    // calculate DFCF once all data is retrieved
     for (let symbol of symbols) {
-      if ('st' in data[symbol] && 'lt' in data[symbol] && 'fcf' in data[symbol]) {
-        data[symbol]['dfcf'] = ((data[symbol]['st']+data[symbol]['lt'])/data[symbol]['fcf']).toFixed(2)
-      } else {
-        delete data[symbol]
+      if (!('dfcf' in data[symbol])) {
+        if ('st' in data[symbol] && 'lt' in data[symbol] && 'fcf' in data[symbol]) {
+          data[symbol]['dfcf'] = ((data[symbol]['st']+data[symbol]['lt'])/data[symbol]['fcf']).toFixed(2)
+        } else {
+          delete data[symbol]
+        }
       }
     }
     identifiers['cash-flow']['dfcf'] = "Debt / Free Cash Flow"
