@@ -113,6 +113,11 @@ app.get('/', function (request, response) {
   response.render('index', {data: data, ids: identifiers})
 })
 
+app.get('/reload/:symbol', function (request, response) {
+  delete data[request.params.symbol]
+  response.redirect('/')
+})
+
 app.get('/json', function (request, response) {
   response.json(data);
 })
