@@ -23,3 +23,5 @@ html
             each title, id in headers
               if data[symbol][id]
                 td= data[symbol][id].toLocaleString('en', {useGrouping:true})
+              else
+                td -

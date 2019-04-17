@@ -95,7 +95,7 @@ app.use(function (request, response, next) {
   Promise.all(promises).then(function() {
     for (let symbol of symbols) {
       // if not already calculated
-      if (!('dfcf' in data[symbol])) {
+      if (!('dfcf' in data[symbol]) || data[symbol]['dfcf'] == 0) {
         if ('st' in data[symbol] && 'lt' in data[symbol] && 'fcf' in data[symbol]) {
           data[symbol]['dfcf'] = ( ( data[symbol]['st'] + data[symbol]['lt'] ) / data[symbol]['fcf'] ).toFixed(2)
         } else {
