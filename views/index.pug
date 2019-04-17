@@ -20,4 +20,5 @@ html
           td= symbol
           each headers, page in ids
             each title, id in headers
-              td= data[symbol][id].toLocaleString('en', {useGrouping:true})
+              if data[symbol][id]
+                td= data[symbol][id].toLocaleString('en', {useGrouping:true})
