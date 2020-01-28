@@ -1,4 +1,3 @@
-// Init server
 var express = require('express')
 var app = express()
 app.use(express.static('public'))
@@ -31,20 +30,9 @@ app.post('/search', function (request, response) {
     }
   })
   
-  // calculate DFCF once all data is retrieved
-  Promise.all(promises).then(function() {
-    for (let symbol of symbols) {
-      // if not already calculated
-      if (!('dfcf' in data[symbol])) {
-        if ('st' in data[symbol] && 'lt' in data[symbol] && 'fcf' in data[symbol]) {
-          data[symbol]['dfcf'] = ( ( data[symbol]['st'] + data[symbol]['lt'] ) / data[symbol]['fcf'] ).toFixed(2)
-        } else {
-          delete data[symbol]
-        }
-      }
-    }
-    identifiers['cash-flow']['dfcf'] = "Debt / Free Cash Flow"
-    next()
+  Promise.all(promises).then( (stores) => {
+    var url = 'https://www.ebay.com.au/sch/i.html?_nkw=ipad+mini+case&_in_kw=1&_ex_kw=&_sacat=0&_udlo=&_udhi=&_ftrt=901&_ftrv=1&_sabdlo=&_sabdhi=&_samilow=&_samihi=&_sadis=15&_stpos=2223&_sargn=-1%26saslc%3D1&_salic=15&_fss=1&_fsradio=%26LH_SpecificSeller%3D1&_saslop=1&_sasl=100percentmoto&_sop=12&_dmd=1&_ipg=200&_fosrp=1'
+    response.redirect(url)
   })
 })
 
