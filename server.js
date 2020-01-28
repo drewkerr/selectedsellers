@@ -2,7 +2,7 @@ var express = require('express')
 var app = express()
 app.use(express.static('public'))
 app.set('view engine', 'pug')
-const cheerio = require('cheerio')
+const $ = require('cheerio')
 var fetch = require('request-promise-native')
 
 app.get('/search', function (request, response) {
@@ -14,15 +14,13 @@ app.get('/search', function (request, response) {
     } else if (res.statusCode !== 200) {
       console.log('Status:', res.statusCode)
     } else {
-      var $ = cheerio.load(body)
-      $("a[href^='https://www.ebay.com.au/str/']").eq(4).each( (i, e) => {
+      $("a[href^='https://www.ebay.com.au/str/']", body).eq(4).each( (i, e) => {
         console.log($(e).attr('href'))
         promises.push(
           fetch.get( $(e).attr('href') )
             .then( (body) => {
-              var $ = cheerio.load(body)
-              console.log($("a[href^='https://www.ebay.com.au/usr/']").eq(0).attr('href').slice(26))
-              return $("a[href^='https://www.ebay.com.au/usr/']").eq(0).attr('href').slice(26)
+              console.log(body)
+              return $("a[href^='https://www.ebay.com.au/usr/']", body).eq(0).attr('href').slice(26)
             })
             .catch( (err) => {
               console.log(err)
