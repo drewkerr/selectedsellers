@@ -16,7 +16,6 @@ app.get('/search', (request, response) => {
       )
     })
     Promise.all(promises).then(stores => {
-      console.log(stores)
       var url = 'https://www.ebay.com.au/sch/ebayadvsearch?_fsradio=%26LH_SpecificSeller%3D1&_sop=12&_saslop=1&_sasl='
       url += stores.join('%2C')
       response.redirect(url)
