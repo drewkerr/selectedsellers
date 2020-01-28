@@ -18,19 +18,19 @@ app.get('/search', function (request, response) {
         console.log($(e).attr('href'))
         promises.push(
           fetch.get( $(e).attr('href') )
-            .then( (body) => {
+            .then(body => {
               return $("a[href^='http://www.ebay.com.au/usr/']", body).eq(0).attr('href').slice(25)
             })
-            .catch( (err) => {
+            .catch(err => {
               console.log(err)
-              return
+              return err
             })
         )
       })
     }
   })
   
-  Promise.all(promises).then( (stores) => {
+  Promise.all(promises).then(stores => {
     console.log(stores)
     var url = 'https://www.ebay.com.au/sch/ebayadvsearch?_fsradio=%26LH_SpecificSeller%3D1&_sop=12&_saslop=1&_sasl='
     url += stores.join('%2C')
