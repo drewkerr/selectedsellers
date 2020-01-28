@@ -4,11 +4,14 @@ var app = express()
 app.use(express.static('public'))
 app.set('view engine', 'pug')
 const cheerio = require('cheerio')
-var fetch = require('request-promise')
+var fetch = require('request-promise-native')
 
-app.get('/search', function (request, response) {
+app.post('/search', function (request, response) {
+  fetch.get({ url: request.query.url }, (err, res, body) => {
+    const $ = cheerio.load(body)
+  })
   var promises = []
-  for (let symbol of symbols) {
+  for (let store of stores) {
     // only fetch if not already in data
     if (!(symbol in data)) {
       data[symbol] = {}
