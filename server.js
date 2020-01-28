@@ -7,12 +7,8 @@ var fetch = require('request-promise-native')
 
 app.get('/search', function (request, response) {
   var promises = []
-  fetch.get(request.query.url, (err, res, body) => {
-    if (err) {
-      console.log('Error:', err)
-    } else if (res.statusCode !== 200) {
-      console.log('Status:', res.statusCode)
-    } else {
+  fetch.get(request.query.url)
+    .then(body => {
       $("a[href^='https://www.ebay.com.au/str/']", body).eq(4).each( (i, e) => {
         promises.push(
           fetch.get( $(e).attr('href') )
@@ -22,7 +18,8 @@ app.get('/search', function (request, response) {
             .catch(err => { return err })
         )
       })
-    }
+    })
+    .catch(err => { return err })
   })
   
   Promise.all(promises).then(stores => {
