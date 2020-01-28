@@ -7,8 +7,18 @@ const cheerio = require('cheerio')
 var fetch = require('request-promise-native')
 
 app.post('/search', function (request, response) {
+  var stores = []
   fetch.get({ url: request.query.url }, (err, res, body) => {
-    const $ = cheerio.load(body)
+    if (err) {
+      console.log('Error:', err)
+    } else if (res.statusCode !== 200) {
+      console.log('Status:', res.statusCode)
+    } else {
+      const $ = cheerio.load(body)
+      $("a[href^='https://www.ebay.com.au/str/']").each( (i, e) => {
+        
+      })
+    }
   })
   var promises = []
   for (let store of stores) {
