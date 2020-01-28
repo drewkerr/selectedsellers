@@ -1,5 +1,5 @@
 {
-  "name": "dfcf",
+  "name": "selectedsellers",
   "version": "0.0.1",
   "description": "A simple Node app built on Express, instantly up and running.",
   "main": "server.js",
@@ -7,17 +7,17 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "express": "^4.16.4",
-    "pug": "^2.0.3",
+    "express": "^4.17.1",
+    "pug": "^2.0.4",
     "request": "^2.88.0",
     "cheerio": "^0.22.0",
-    "request-promise": "^4.2.2"
+    "request-promise": "^4.2.5"
   },
   "engines": {
     "node": "8.x"
   },
   "repository": {
-    "url": "https://glitch.com/edit/#!/dfcf"
+    "url": "https://glitch.com/edit/#!/selectedsellers"
   },
   "license": "MIT",
   "keywords": [

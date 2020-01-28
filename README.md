@@ -1,3 +1,3 @@
-# Debt to Free Cash Flow
+# Selected Sellers
 
-ST Debt & Current Portion LT Debt | Long-Term Debt | Free Cash Flow | Debt / Free Cash Flow
+Create a search URL from an eBay sale T&Cs page
