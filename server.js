@@ -8,18 +8,16 @@ var fetch = require('request-promise-native')
 app.get('/search', function (request, response) {
   var promises = []
   console.log(request.query.url)
-  fetch.get({ url: request.query.url }, (err, res, body) => {
+  fetch.get(request.query.url, (err, res, body) => {
     if (err) {
       console.log('Error:', err)
     } else if (res.statusCode !== 200) {
       console.log('Status:', res.statusCode)
     } else {
       const $ = cheerio.load(body)
-      $("a[href^='https://www.ebay.com.au/str/']").eq(0).each( (i, e) => {
+      $("a[href^='https://www.ebay.com.au/str/']").eq(4).each( (i, e) => {
         console.log($(e).attr('href'))
-        promises.push(fetch.get({
-          url: $(e).attr('href')
-        }, (err, res, body) => {
+        promises.push(fetch.get($(e).attr('href'), (err, res, body) => {
           if (err) {
             console.log('Error:', err)
           } else if (res.statusCode !== 200) {
