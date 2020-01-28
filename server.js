@@ -5,8 +5,9 @@ app.set('view engine', 'pug')
 const cheerio = require('cheerio')
 var fetch = require('request-promise-native')
 
-app.post('/search', function (request, response) {
+app.get('/search', function (request, response) {
   var promises = []
+  console.log(request.query.url)
   fetch.get({ url: request.query.url }, (err, res, body) => {
     if (err) {
       console.log('Error:', err)
@@ -14,9 +15,10 @@ app.post('/search', function (request, response) {
       console.log('Status:', res.statusCode)
     } else {
       const $ = cheerio.load(body)
-      $("a[href^='https://www.ebay.com.au/str/']").each( (i, e) => {
+      $("a[href^='https://www.ebay.com.au/str/']").eq(0).each( (i, e) => {
+        console.log($(e).attr('href'))
         promises.push(fetch.get({
-          url: $(this).attr('href')
+          url: $(e).attr('href')
         }, (err, res, body) => {
           if (err) {
             console.log('Error:', err)
@@ -31,7 +33,8 @@ app.post('/search', function (request, response) {
   })
   
   Promise.all(promises).then( (stores) => {
-    var url = 'https://www.ebay.com.au/sch/i.html?_nkw=ipad+mini+case&_in_kw=1&_ex_kw=&_sacat=0&_udlo=&_udhi=&_ftrt=901&_ftrv=1&_sabdlo=&_sabdhi=&_samilow=&_samihi=&_sadis=15&_stpos=2223&_sargn=-1%26saslc%3D1&_salic=15&_fss=1&_fsradio=%26LH_SpecificSeller%3D1&_saslop=1&_sasl=100percentmoto&_sop=12&_dmd=1&_ipg=200&_fosrp=1'
+    var url = 'https://www.ebay.com.au/sch/ebayadvsearch?_fsradio=%26LH_SpecificSeller%3D1&_sop=12&_saslop=1&_sasl='
+    url += stores.join('%2C')
     response.redirect(url)
   })
 })
