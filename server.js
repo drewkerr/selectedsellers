@@ -1,5 +1,3 @@
-var data = {}
-
 // Init server
 var express = require('express')
 var app = express()
@@ -7,7 +5,6 @@ app.use(express.static('public'))
 app.set('view engine', 'pug')
 const cheerio = require('cheerio')
 var fetch = require('request-promise')
-
 
 app.get('/search', function (request, response) {
   var promises = []

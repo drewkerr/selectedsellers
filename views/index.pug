@@ -12,6 +12,9 @@ html
       span.blue cted
       span.yellow Sel
       span.green lers
+    p eBay does not provide a way to search only the sellers participating in a sale.
+    p Paste the address (URL) of the sale T&Cs below and search.
+    p Select Advanced on the eBay search page for options.
     form(action="/search")
-      input(name="term" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="URL of T&Cs")
+      input(name="url" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="URL of T&Cs")
       button Search sale
