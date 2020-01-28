@@ -9,6 +9,7 @@ app.get('/search', (request, response) => {
   var promises = []
   fetch.get(request.query.url).then(body => {
     $("a[href^='https://www.ebay.com.au/str/']", body).each( (i, e) => {
+      console.log(i)
       promises.push(
         fetch.get( $(e).attr('href') ).then(body => {
             return $("a[href^='http://www.ebay.com.au/usr/']", body).eq(0).attr('href').slice(27)
