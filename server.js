@@ -14,18 +14,21 @@ app.get('/search', function (request, response) {
     } else if (res.statusCode !== 200) {
       console.log('Status:', res.statusCode)
     } else {
-      const $ = cheerio.load(body)
+      var $ = cheerio.load(body)
       $("a[href^='https://www.ebay.com.au/str/']").eq(4).each( (i, e) => {
         console.log($(e).attr('href'))
-        promises.push(fetch.get($(e).attr('href'), (err, res, body) => {
-          if (err) {
-            console.log('Error:', err)
-          } else if (res.statusCode !== 200) {
-            console.log('Status:', res.statusCode)
-          } else {
-            return $("a[href^='https://www.ebay.com.au/usr/']").eq(0).attr('href').slice(26)
-          }
-        }))
+        promises.push(
+          fetch.get( $(e).attr('href') )
+            .then( (body) => {
+              var $ = cheerio.load(body)
+              console.log($("a[href^='https://www.ebay.com.au/usr/']").eq(0).attr('href').slice(26))
+              return $("a[href^='https://www.ebay.com.au/usr/']").eq(0).attr('href').slice(26)
+            })
+            .catch( (err) => {
+              console.log(err)
+              return
+            })
+        )
       })
     }
   })
