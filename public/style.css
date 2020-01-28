@@ -11,10 +11,25 @@ input {
   box-sizing: border-box;
 	border-radius: 0.5em;
 	border: none;
-  margin: 0 1em 0 0;
+  margin: 0 0.5em 0 0;
   padding: 0.5em 0.5em;
 	outline: none;
   background-color: #f6f6f6;
+}
+
+button {
+  display: inline-block;
+  border-radius: 0.5em;
+  border: none;
+  padding: 0.5em 1em;
+  margin: 0;
+  text-decoration: none;
+  background: #0063D1;
+  color: white;
+  cursor: pointer;
+  text-align: center;
+  -webkit-appearance: none;
+  -moz-appearance: none;
 }
 
 .red {
