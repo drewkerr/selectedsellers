@@ -32,18 +32,20 @@ io.on('connection', function(socket) {
     var urls = []
     fetch.get(term).then(body => {
       $("a[href^='https://www.ebay.com.au/str/']", body).each( (i, e) => {
-        urls.push( Promise.delay(500, $(e).attr('href')) )
+        urls.push( $(e).attr('href') )
       })
-      Promise.mapSeries(urls, url => {
-        fetch.get(url, options).then(body => {
-          var store = $("a[href^='http://www.ebay.com.au/usr/']", body).eq(0).attr('href') || $("a[href^='http://myworld.ebay.com.au/']", body).eq(0).attr('href')
-          if (store) {
-            console.log(store)
-            return store
-          } else {
-            console.error("Error:", url)
-          }
-        }).catch(err => { console.error(err) })
+      await Promise.mapSeries(urls, url => {
+        Promise.delay(500).then(() => {
+          fetch.get(url, options).then(body => {
+            var store = $("a[href^='http://www.ebay.com.au/usr/']", body).eq(0).attr('href') || $("a[href^='http://myworld.ebay.com.au/']", body).eq(0).attr('href')
+            if (store) {
+              console.log(store)
+              return store
+            } else {
+              console.error("Error:", url)
+            }
+          }).catch(err => { console.error(err) })
+        })
       }).then(stores => {
         var search = 'https://www.ebay.com.au/sch/ebayadvsearch?_fsradio=%26LH_SpecificSeller%3D1&_sop=12&_saslop=1&_sasl='
         search += stores.join('%2C')
