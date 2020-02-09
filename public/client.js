@@ -5,11 +5,11 @@ $(function(){
   $('form').submit(function(event) {
     event.preventDefault()
     var term = $('input').val()
-    $('#results').html('<div>Searching...</div>')
+    $('#results').text('Searching...')
   })
   
   socket.on('progress', data => {
-    $('#results').html('<div>Searching...</div>')
+    $('#results').html('<progress value="80" min="0" max="100"></progress>')
   })
   
   socket.on('redirect', data => {
@@ -17,7 +17,7 @@ $(function(){
   })
   
   socket.on('error', data => {
-    $('#results').html('<div>Searching...</div>')
+    $('#results').text(data)
   })
   
 })

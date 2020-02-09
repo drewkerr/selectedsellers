@@ -17,9 +17,9 @@ var listener = server.listen(process.env.PORT, () => {
 
 var io = require('socket.io')(server)
 
-io.on('connection', function(socket) {
+io.on('connection', socket => {
   
-  socket.on('search', function(term, fn) {
+  socket.on('search', term => {
     console.log('Search for:', term)
     var urls = []
     var progress = 0

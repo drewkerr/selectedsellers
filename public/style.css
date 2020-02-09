@@ -49,5 +49,9 @@ button {
 }
 
 #results {
-  
+  width: 80vw;
+  margin: 1em auto;
+  border-radius: 0.5em;
+  border: none;
+  padding: 0.5em 1em;
 }

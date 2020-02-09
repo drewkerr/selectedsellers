@@ -18,6 +18,7 @@ html
       input(name="url" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="URL of T&Cs" autofocus)
       button Search sale
     #results
+    progress(min=0 max=100)
     block scripts
       script(src="https://code.jquery.com/jquery-2.2.1.min.js")
       script(src="/socket.io/socket.io.js")
