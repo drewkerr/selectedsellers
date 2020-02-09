@@ -40,3 +40,23 @@ var listener = server.listen(process.env.PORT, () => {
 })
 
 var io = require('socket.io')(server)
+
+io.on('connection', function(socket) {
+  
+  socket.on('search', function(term, fn) {
+    console.log('Search for:', term)
+    var results = { resultCount: 0, results: [] }
+    var url = 'https://itunes.apple.com/search?media=music&explicit=no&limit=10&term='
+    url += encodeURIComponent(term)
+    itunes.get({ url: url, json: true  }, (err, res, data) => {
+      if (err) {
+        console.log('Error:', err)
+      } else if (res.statusCode !== 200) {
+        console.log('Status:', res.statusCode)
+      } else {
+        results = data
+      }
+      fn(results)
+    })
+  })
+})
