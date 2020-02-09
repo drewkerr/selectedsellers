@@ -19,15 +19,15 @@ app.get('/search', (request, response) => {
           console.log(store)
           return store
         } else {
-          console.log("Error:", url)
+          console.error("Error:", url)
         }
-      }).catch(err => { console.log(err) })
+      }).catch(err => { console.error(err) })
     }).then(stores => {
       var search = 'https://www.ebay.com.au/sch/ebayadvsearch?_fsradio=%26LH_SpecificSeller%3D1&_sop=12&_saslop=1&_sasl='
       search += stores.join('%2C')
       response.redirect(search)
     })
-  }).catch(err => { console.log(err) })
+  }).catch(err => { console.error(err) })
 })
 
 app.get('/', (request, response) => {
