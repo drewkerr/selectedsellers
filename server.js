@@ -37,11 +37,12 @@ io.on('connection', socket => {
               console.log(store)
               stores.push(store.slice(27).replace('/',''))
             } else {
-              console.error(url)
+              throw 'Invalid User'
             }
             io.emit('progress', progress / urls.length * 100)
           }).catch(err => {
             console.error(url)
+            io.emit('error', url)
           })
         })
       }).then(data => {

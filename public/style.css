@@ -48,14 +48,18 @@ button {
   color: #85B715;
 }
 
-#results {
+#progress {
   width: 50vw;
-  margin: 1em auto;
+  margin: 1em auto 0;
   border-radius: 0.5em;
   border: none;
-  padding: 0.5em 1em;
+  padding: 0.5em 1em 0;
 }
 
 progress {
   width: 50vw;
+}
+
+#error {
+  color: #E43137;
 }

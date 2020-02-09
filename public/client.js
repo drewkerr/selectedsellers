@@ -10,7 +10,7 @@ $(function(){
   })
   
   socket.on('progress', data => {
-    $('#results').text(Math.round(data) + '%')
+    $('#progress').text(Math.round(data) + '%')
     $('progress').attr('value', data)
   })
   
@@ -19,7 +19,7 @@ $(function(){
   })
   
   socket.on('error', data => {
-    $('#results').text(data)
+    $('#error').append(data)
   })
   
 })
