@@ -14,12 +14,12 @@ app.get('/search', (request, response) => {
     })
     Promise.each(urls, url => {
       fetch.get(url).then(body => {
-        var store = $("a[href^='http://www.ebay.com.au/usr/']", body).eq(0).attr('href')
+        var store = $("a[href^='http://www.ebay.com.au/usr/']", body).eq(0).attr('href') || $("a[href^='http://myworld.ebay.com.au/']", body).eq(0).attr('href')
         if (store) {
           console.log(store)
-        return store.slice(27)
+          return store
         } else {
-          console.log("Error:",url)
+          console.log("Error:", url)
         }
       }).catch(err => { console.log(err) })
     }).then(stores => {
