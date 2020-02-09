@@ -7,21 +7,17 @@ var fetch = require('request-promise')
 const Promise = require('bluebird')
 
 app.get('/search', (request, response) => {
-  var promises = []
+  var urls = []
   fetch.get(request.query.url).then(body => {
     $("a[href^='https://www.ebay.com.au/str/']", body).each( (i, e) => {
-      promises.push(
-        fetch.get( $(e).attr('href') ).then(body => {
-            return $("a[href^='http://www.ebay.com.au/usr/']", body).eq(0).attr('href').slice(27)
-        }).catch(err => { return err })
-      )
+      urls.push( $(e).attr('href') )
     })
-    Promise.all(promises).then(stores => {
+    Promise.map(urls, fetch.get, {concurrency: 1}).then(stores => {
       var url = 'https://www.ebay.com.au/sch/ebayadvsearch?_fsradio=%26LH_SpecificSeller%3D1&_sop=12&_saslop=1&_sasl='
       url += stores.join('%2C')
       response.redirect(url)
     })
-  }).catch(err => { return err })
+  }).catch(err => { console.log(err) })
 })
 
 app.get('/', (request, response) => {
