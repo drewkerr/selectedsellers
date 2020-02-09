@@ -22,12 +22,14 @@ io.on('connection', function(socket) {
   socket.on('search', function(term, fn) {
     console.log('Search for:', term)
     var urls = []
+    var progress = 0
     fetch.get(term).then(body => {
       $("a[href^='https://www.ebay.com.au/str/']", body).each( (i, e) => {
         urls.push( $(e).attr('href') )
       })
       Promise.mapSeries(urls, async url => {
         await Promise.delay(100).then(() => {
+          progress++
           fetch.get(url).then(body => {
             var store = $("a[href^='http://www.ebay.com.au/usr/']", body).eq(0).attr('href') || $("a[href^='http://myworld.ebay.com.au/']", body).eq(0).attr('href')
             if (store) {
@@ -36,9 +38,10 @@ io.on('connection', function(socket) {
             } else {
               console.error("Error:", url)
             }
-            io.emit('progress', urls.length * 100)
+            io.emit('progress', progress / urls.length * 100)
           }).catch(err => {
             console.error(err)
+            io.emit('progress', progress / urls.length * 100)
           })
         })
       }).then(stores => {
