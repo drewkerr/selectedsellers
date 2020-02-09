@@ -51,7 +51,7 @@ io.on('connection', socket => {
       })
     }).catch(err => {
       console.error(err)
-      io.error('error', 'Invalid URL')
+      io.emit('error', 'Invalid URL')
     })
   })
 

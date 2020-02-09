@@ -6,10 +6,11 @@ $(function(){
     event.preventDefault()
     var term = $('input').val()
     $('#results').text('Searching...')
+    socket.emit('search', term)
   })
   
   socket.on('progress', data => {
-    $('#results').html('<progress value="80" min="0" max="100"></progress>')
+    $('progress').attr('value', data)
   })
   
   socket.on('redirect', data => {

@@ -49,9 +49,13 @@ button {
 }
 
 #results {
-  width: 80vw;
+  width: 50vw;
   margin: 1em auto;
   border-radius: 0.5em;
   border: none;
   padding: 0.5em 1em;
+}
+
+progress {
+  width: 50vw;
 }
