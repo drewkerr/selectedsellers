@@ -45,7 +45,7 @@ io.on('connection', socket => {
             io.emit('error', url)
           })
         })
-      }).then(data => {
+      }).delay(1000).then(data => {
         console.log(stores)
         var search = 'https://www.ebay.com.au/sch/ebayadvsearch?_fsradio=%26LH_SpecificSeller%3D1&_sop=12&_saslop=1&_sasl='
         search += stores.join('%2C')

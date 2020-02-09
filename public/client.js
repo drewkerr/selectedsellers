@@ -4,8 +4,9 @@ $(function(){
   
   $('form').submit(function(event) {
     event.preventDefault()
+    $('#progress').text('')
+    $('#error').text('')
     var term = $('input').val()
-    $('#results').text('Searching...')
     socket.emit('search', term)
   })
   
@@ -19,7 +20,7 @@ $(function(){
   })
   
   socket.on('error', data => {
-    $('#error').append(data)
+    $('<div>').text(data).appendTo('#error')
   })
   
 })
