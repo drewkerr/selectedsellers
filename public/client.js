@@ -2,12 +2,13 @@ $(function(){
 
   var socket = io()
   
-  $('form').submit(function(event) {
+  $('form').submit(event => {
     event.preventDefault()
     $('#progress').text('')
     $('#error').text('')
     var term = $('input').val()
     socket.emit('search', term)
+    $('form').remove()
   })
   
   socket.on('progress', data => {
