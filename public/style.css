@@ -60,6 +60,10 @@ progress {
   width: 50vw;
 }
 
+progress:not([value]) {
+  display: none;
+}
+
 #error {
   color: #E43137;
   margin: 1em auto;

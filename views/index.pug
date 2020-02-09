@@ -13,12 +13,12 @@ html
       span.yellow Sel
       span.green lers
     p eBay does not provide a way to search only the sellers participating in a sale.
-    p Paste the address (URL) of the sale T&Cs below and search.
     form(action="/search")
+      p Paste the address (URL) of the sale T&Cs below and search.
       input(name="url" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="URL of T&Cs" autofocus)
       button Search sale
     #progress
-    progress(value=0 min=0 max=100)
+    progress(min=0 max=100)
     #error
     block scripts
       script(src="https://code.jquery.com/jquery-2.2.1.min.js")
