@@ -12,10 +12,16 @@ app.get('/search', (request, response) => {
     $("a[href^='https://www.ebay.com.au/str/']", body).each( (i, e) => {
       urls.push( $(e).attr('href') )
     })
-    Promise.map(urls, fetch.get, {concurrency: 1}).then(stores => {
-      var url = 'https://www.ebay.com.au/sch/ebayadvsearch?_fsradio=%26LH_SpecificSeller%3D1&_sop=12&_saslop=1&_sasl='
-      url += stores.join('%2C')
-      response.redirect(url)
+    Promise.map(urls, url => {
+      fetch.get(url).then(body => {
+        var store = $("a[href^='http://www.ebay.com.au/usr/']", body).eq(0).attr('href').slice(27)
+        console.log(store)
+        return store
+      }).catch(err => { console.log(err) })
+    }, {concurrency: 1}).then(stores => {
+      var search = 'https://www.ebay.com.au/sch/ebayadvsearch?_fsradio=%26LH_SpecificSeller%3D1&_sop=12&_saslop=1&_sasl='
+      search += stores.join('%2C')
+      response.redirect(search)
     })
   }).catch(err => { console.log(err) })
 })
