@@ -10,6 +10,7 @@ $(function(){
   })
   
   socket.on('progress', data => {
+    $('#results').text(Math.round(data) + '%')
     $('progress').attr('value', data)
   })
   

@@ -36,15 +36,15 @@ io.on('connection', socket => {
               console.log(store)
               return store
             } else {
-              console.error("Error:", url)
+              console.error(url)
             }
             io.emit('progress', progress / urls.length * 100)
           }).catch(err => {
-            console.error(err)
-            io.emit('progress', progress / urls.length * 100)
+            console.error(url)
           })
         })
       }).then(stores => {
+        console.log(stores)
         var search = 'https://www.ebay.com.au/sch/ebayadvsearch?_fsradio=%26LH_SpecificSeller%3D1&_sop=12&_saslop=1&_sasl='
         search += stores.join('%2C')
         io.emit('redirect', search)
