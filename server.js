@@ -3,7 +3,8 @@ var app = express()
 app.use(express.static('public'))
 app.set('view engine', 'pug')
 const $ = require('cheerio')
-var fetch = require('request-promise-native')
+var fetch = require('request-promise')
+const Promise = require('bluebird')
 
 app.get('/search', (request, response) => {
   var promises = []
