@@ -1,3 +1,11 @@
+process.env.UV_THREADPOOL_SIZE = 128
+const options = {
+  timeout: 20000,
+  pool: {
+    maxSockets: Infinity
+  }
+}
+
 var express = require('express')
 var app = express()
 app.use(express.static('public'))
@@ -27,7 +35,7 @@ io.on('connection', function(socket) {
         urls.push( $(e).attr('href') )
       })
       Promise.map(urls, url => {
-        fetch.get(url).then(body => {
+        fetch.get(url, options).then(body => {
           var store = $("a[href^='http://www.ebay.com.au/usr/']", body).eq(0).attr('href') || $("a[href^='http://myworld.ebay.com.au/']", body).eq(0).attr('href')
           if (store) {
             console.log(store)
@@ -36,7 +44,7 @@ io.on('connection', function(socket) {
             console.error("Error:", url)
           }
         }).catch(err => { console.error(err) })
-      }).then(stores => {
+      }, {concurrency: 3} ).then(stores => {
         var search = 'https://www.ebay.com.au/sch/ebayadvsearch?_fsradio=%26LH_SpecificSeller%3D1&_sop=12&_saslop=1&_sasl='
         search += stores.join('%2C')
       })
