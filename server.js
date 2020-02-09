@@ -32,9 +32,9 @@ io.on('connection', function(socket) {
     var urls = []
     fetch.get(term).then(body => {
       $("a[href^='https://www.ebay.com.au/str/']", body).each( (i, e) => {
-        urls.push( $(e).attr('href') )
+        urls.push( Promise.delay(500, $(e).attr('href')) )
       })
-      Promise.map(urls, url => {
+      Promise.mapSeries(urls, url => {
         fetch.get(url, options).then(body => {
           var store = $("a[href^='http://www.ebay.com.au/usr/']", body).eq(0).attr('href') || $("a[href^='http://myworld.ebay.com.au/']", body).eq(0).attr('href')
           if (store) {
@@ -44,7 +44,7 @@ io.on('connection', function(socket) {
             console.error("Error:", url)
           }
         }).catch(err => { console.error(err) })
-      }, {concurrency: 3} ).then(stores => {
+      }).then(stores => {
         var search = 'https://www.ebay.com.au/sch/ebayadvsearch?_fsradio=%26LH_SpecificSeller%3D1&_sop=12&_saslop=1&_sasl='
         search += stores.join('%2C')
       })
