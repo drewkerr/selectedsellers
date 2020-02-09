@@ -34,6 +34,9 @@ app.get('/', (request, response) => {
   response.render('index')
 })
 
-var listener = app.listen(process.env.PORT, () => {
+var server = require('http').createServer(app)
+var listener = server.listen(process.env.PORT, () => {
   console.log('Your app is listening on port ' + listener.address().port)
 })
+
+var io = require('socket.io')(server)
