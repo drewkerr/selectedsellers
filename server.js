@@ -27,7 +27,7 @@ io.on('connection', socket => {
     var stores = []
     var progress = 0
     fetch.get(term).then(body => {
-      $("ul a[href^='https://www.ebay.com.au/str/']", body).each( (i, e) => {
+      $("ul a[href$='ebay.com.au/str/']", body).each( (i, e) => {
         urls.push( $(e).attr('href') )
       })
       Promise.mapSeries(urls, async url => {

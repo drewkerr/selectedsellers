@@ -14,6 +14,9 @@ $(function(){
   socket.on('progress', data => {
     $('#progress').text(Math.round(data) + '%')
     $('progress').attr('value', data)
+    if (data == 100) {
+      $('#progress').html($('<a>').attr('href', 'javascript:window.location.reload(true)').text('Restart'))
+    }
   })
   
   socket.on('link', data => {
