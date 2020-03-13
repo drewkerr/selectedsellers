@@ -31,7 +31,7 @@ io.on('connection', socket => {
         urls.push( $(e).attr('href') )
       })
       Promise.mapSeries(urls, async url => {
-        await Promise.delay(100).then(() => {
+        await Promise.delay(200).then(() => {
           progress++
           fetch.get(url).then(body => {
             var store = $("a[href^='http://www.ebay.com.au/usr/']", body).eq(0).attr('href') || $("a[href^='http://myworld.ebay.com.au/']", body).eq(0).attr('href')
@@ -40,7 +40,7 @@ io.on('connection', socket => {
               stores.push(store.slice(27).replace('/',''))
               if (stores.length == 50) {
                 io.emit('link', search + stores.join('%2C'))
-                var stores = []
+                stores = []
               }
             } else {
               throw 'Invalid User'
@@ -48,11 +48,13 @@ io.on('connection', socket => {
             io.emit('progress', progress / urls.length * 100)
           }).catch(err => {
             console.error(url)
-            io.emit('error', url)
+            io.emit('error', url + err)
           })
         })
       }).delay(1000).then(data => {
-        io.emit('link', search + stores.join('%2C'))
+        if (stores) {
+          io.emit('link', search + stores.join('%2C'))
+        }
       })
     }).catch(err => {
       console.error(err)
