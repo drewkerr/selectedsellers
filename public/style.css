@@ -64,6 +64,10 @@ progress:not([value]) {
   display: none;
 }
 
+#links a {
+  display: block;
+}
+
 #error {
   color: #E43137;
   margin: 1em auto;

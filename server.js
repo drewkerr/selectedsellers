@@ -6,6 +6,8 @@ const $ = require('cheerio')
 var fetch = require('request-promise')
 const Promise = require('bluebird')
 
+const search = 'https://www.ebay.com.au/sch/ebayadvsearch?_fsradio=%26LH_SpecificSeller%3D1&_sop=12&_saslop=1&_sasl='
+
 app.get('/', (request, response) => {
   response.render('index')
 })
@@ -29,13 +31,17 @@ io.on('connection', socket => {
         urls.push( $(e).attr('href') )
       })
       Promise.mapSeries(urls, async url => {
-        await Promise.delay(200).then(() => {
+        await Promise.delay(100).then(() => {
           progress++
           fetch.get(url).then(body => {
             var store = $("a[href^='http://www.ebay.com.au/usr/']", body).eq(0).attr('href') || $("a[href^='http://myworld.ebay.com.au/']", body).eq(0).attr('href')
             if (store) {
               console.log(store)
               stores.push(store.slice(27).replace('/',''))
+              if (stores.length == 50) {
+                io.emit('link', search + stores.join('%2C'))
+                var stores = []
+              }
             } else {
               throw 'Invalid User'
             }
@@ -46,9 +52,7 @@ io.on('connection', socket => {
           })
         })
       }).delay(1000).then(data => {
-        var search = 'https://www.ebay.com.au/sch/ebayadvsearch?_fsradio=%26LH_SpecificSeller%3D1&_sop=12&_saslop=1&_sasl='
-        search += stores.join('%2C')
-        io.emit('redirect', search)
+        io.emit('link', search + stores.join('%2C'))
       })
     }).catch(err => {
       console.error(err)
