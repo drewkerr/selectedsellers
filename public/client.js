@@ -15,6 +15,7 @@ $(function(){
     $('#progress').text(Math.round(data) + '%')
     $('progress').attr('value', data)
     if (data == 100) {
+      $('progress').remove()
       $('#progress').html($('<a>').attr('href', 'javascript:window.location.reload(true)').text('Restart'))
     }
   })

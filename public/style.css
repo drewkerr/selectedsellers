@@ -32,6 +32,10 @@ button, #progress a {
   -moz-appearance: none;
 }
 
+form p {
+  color: darkgray;
+}
+
 .red {
   color: #E43137;
 }
@@ -69,8 +73,12 @@ a {
   text-decoration: none;
 }
 
-#links a {
-  display: block;
+#links {
+  margin-top: 1em;
+}
+
+#links a:after {
+  content: "";
 }
 
 #error {
