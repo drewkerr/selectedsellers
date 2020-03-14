@@ -29,12 +29,12 @@ const Promise = require('bluebird')
 const search = 'https://www.ebay.com.au/sch/ebayadvsearch?_fsradio=%26LH_SpecificSeller%3D1&_sop=12&_saslop=1&_sasl='
 
 app.get('/', (request, response) => {
-  response.render('maintenance')
-})
-
-app.get('/test', (request, response) => {
   response.render('index')
 })
+
+//app.get('/test', (request, response) => {
+//  response.render('index')
+//})
 
 var server = require('http').createServer(app)
 var listener = server.listen(process.env.PORT, () => {
@@ -55,26 +55,37 @@ io.on('connection', socket => {
         urls.push( $(e).attr('href') )
       })
       Promise.mapSeries(urls, async url => {
-        await Promise.delay(200).then(() => {
+        if (cache[url]) {
           progress++
-          fetch.get(url).then(body => {
-            var store = $("a[href^='http://www.ebay.com.au/usr/']", body).eq(0).attr('href') || $("a[href^='http://myworld.ebay.com.au/']", body).eq(0).attr('href')
-            if (store) {
-              console.log(store)
-              stores.push(store.slice(27).replace('/',''))
-              if (stores.length == 50) {
-                io.to(socket.id).emit('link', search + stores.join('%2C'))
-                stores = []
+          stores.push(cache[url])
+          if (stores.length == 50) {
+            io.to(socket.id).emit('link', search + stores.join('%2C'))
+            stores = []
+          }
+          io.to(socket.id).emit('progress', progress / urls.length * 100)
+        } else {
+          await Promise.delay(200).then(() => {
+            progress++
+            fetch.get(url).then(body => {
+              var store = $("a[href^='http://www.ebay.com.au/usr/']", body).eq(0).attr('href') || $("a[href^='http://myworld.ebay.com.au/']", body).eq(0).attr('href')
+              if (store) {
+                console.log(store)
+                cache[url] = store.slice(27).replace('/','')
+                stores.push(cache[url])
+                if (stores.length == 50) {
+                  io.to(socket.id).emit('link', search + stores.join('%2C'))
+                  stores = []
+                }
+              } else {
+                throw 'Invalid User'
               }
-            } else {
-              throw 'Invalid User'
-            }
-            io.to(socket.id).emit('progress', progress / urls.length * 100)
-          }).catch(err => {
-            console.error(url)
-            io.to(socket.id).emit('error', url + err)
+              io.to(socket.id).emit('progress', progress / urls.length * 100)
+            }).catch(err => {
+              console.error(url)
+              io.to(socket.id).emit('error', url + err)
+            })
           })
-        })
+        }
       }).delay(1000).then(data => {
         if (stores) {
           io.to(socket.id).emit('link', search + stores.join('%2C'))
