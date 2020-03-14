@@ -1,4 +1,6 @@
 $(function(){
+  
+  $('input').val(window.location.hash.substr(1))
 
   var socket = io()
   
@@ -8,6 +10,7 @@ $(function(){
     $('#error').text('')
     var term = $('input').val()
     socket.emit('search', term)
+    window.location.hash = term
     $('form').remove()
   })
   
