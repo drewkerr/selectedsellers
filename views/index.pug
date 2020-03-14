@@ -16,6 +16,8 @@ html
     form(action="/search")
       p Paste the address (URL) of the sale T&Cs below and search.
       input(name="url" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="URL of T&Cs" size=40 autofocus)
+      br
+      input(name="item" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="Item to search for (optional)" size=20)
       button Search sale
     #progress
     progress(min=0 max=100)
