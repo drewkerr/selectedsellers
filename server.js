@@ -46,7 +46,7 @@ var io = require('socket.io')(server)
 io.on('connection', socket => {
   
   socket.on('search', data => {
-    console.log('Search for:', data['url'])
+    console.log('Search for:', data)
     var urls = []
     var stores = []
     var progress = 0
@@ -73,7 +73,10 @@ io.on('connection', socket => {
                 cache[url] = store.slice(27).replace('/','')
                 stores.push(cache[url])
                 if (stores.length == 50) {
-                  var link = search + stores.join('%2C') + data['item'] ? '&_nkw=' + data['item'] : ''
+                  var link = search + stores.join('%2C')
+                  if (data['item']) {
+                    link += '&_nkw=' + data['item']
+                  }
                   io.to(socket.id).emit('link', link)
                   stores = []
                 }
@@ -89,7 +92,10 @@ io.on('connection', socket => {
         }
       }).delay(1000).then(data => {
         if (stores) {
-          var link = search + stores.join('%2C') + data['item'] ? '&_nkw=' + data['item'] : ''
+          var link = search + stores.join('%2C')
+          if (data['item']) {
+            link += '&_nkw=' + data['item']
+          }
           io.to(socket.id).emit('link', link)
         }
       })
