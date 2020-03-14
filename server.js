@@ -39,26 +39,26 @@ io.on('connection', socket => {
               console.log(store)
               stores.push(store.slice(27).replace('/',''))
               if (stores.length == 50) {
-                io.emit('link', search + stores.join('%2C'))
+                io.to(socket.id).emit('link', search + stores.join('%2C'))
                 stores = []
               }
             } else {
               throw 'Invalid User'
             }
-            io.emit('progress', progress / urls.length * 100)
+            io.to(socket.id).emit('progress', progress / urls.length * 100)
           }).catch(err => {
             console.error(url)
-            io.emit('error', url + err)
+            io.to(socket.id).emit('error', url + err)
           })
         })
       }).delay(1000).then(data => {
         if (stores) {
-          io.emit('link', search + stores.join('%2C'))
+          io.to(socket.id).emit('link', search + stores.join('%2C'))
         }
       })
     }).catch(err => {
       console.error(err)
-      io.emit('error', 'Invalid URL')
+      io.to(socket.id).emit('error', 'Invalid URL')
     })
   })
 
