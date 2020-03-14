@@ -1,3 +1,23 @@
+// Load data from and save to file
+var fs = require('fs')
+try {
+  var cache = require('./cache.json')
+  console.log(Object.keys(cache).length,'stores loaded.')
+} catch(e) {
+  var cache = {}
+  console.log('Cache reset:',e)
+}
+process.on('SIGTERM', function() {
+  fs.writeFile('./cache.json', JSON.stringify(cache), function(e) {
+    if (e) {
+      console.log(e)
+    } else {
+      console.log(Object.keys(cache).length,'stores saved.')
+    }
+    process.exit(0)
+  })
+})
+
 var express = require('express')
 var app = express()
 app.use(express.static('public'))
@@ -9,6 +29,10 @@ const Promise = require('bluebird')
 const search = 'https://www.ebay.com.au/sch/ebayadvsearch?_fsradio=%26LH_SpecificSeller%3D1&_sop=12&_saslop=1&_sasl='
 
 app.get('/', (request, response) => {
+  response.render('maintenance')
+})
+
+app.get('/test', (request, response) => {
   response.render('index')
 })
 
