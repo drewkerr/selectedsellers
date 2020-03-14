@@ -26,8 +26,6 @@ const $ = require('cheerio')
 var fetch = require('request-promise')
 const Promise = require('bluebird')
 
-const search = 'https://www.ebay.com.au/sch/ebayadvsearch?_fsradio=%26LH_SpecificSeller%3D1&_sop=12&_saslop=1&_sasl='
-
 app.get('/', (request, response) => {
   response.render('index')
 })
@@ -54,6 +52,14 @@ io.on('connection', socket => {
       $("ul a[href*='ebay.com.au/str/']", body).each( (i, e) => {
         urls.push( $(e).attr('href') )
       })
+      const makeLink = () => {
+        const search = 'https://www.ebay.com.au/sch/ebayadvsearch?_fsradio=%26LH_SpecificSeller%3D1&_sop=12&_saslop=1&_sasl='
+        var link = search + stores.join('%2C')
+        if (term['item']) {
+          link += '&_nkw=' + term['item']
+        }
+        io.to(socket.id).emit('link', link)
+      }
       Promise.mapSeries(urls, async url => {
         if (cache[url]) {
           progress++
@@ -73,11 +79,7 @@ io.on('connection', socket => {
                 cache[url] = store.slice(27).replace('/','')
                 stores.push(cache[url])
                 if (stores.length == 50) {
-                  var link = search + stores.join('%2C')
-                  if (term['item']) {
-                    link += '&_nkw=' + term['item']
-                  }
-                  io.to(socket.id).emit('link', link)
+                  makeLink()
                   stores = []
                 }
               } else {
@@ -92,11 +94,7 @@ io.on('connection', socket => {
         }
       }).delay(1000).then(data => {
         if (stores) {
-          var link = search + stores.join('%2C')
-          if (term['item']) {
-            link += '&_nkw=' + term['item']
-          }
-          io.to(socket.id).emit('link', link)
+          makeLink()
         }
       })
     }).catch(err => {
