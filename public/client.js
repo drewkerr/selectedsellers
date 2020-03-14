@@ -1,6 +1,6 @@
 $(function(){
   
-  $('input[name=url]').val(window.location.hash.substr(1))
+  $('input[name="url"]').val(window.location.hash.substr(1))
 
   var socket = io()
   
@@ -8,10 +8,10 @@ $(function(){
     event.preventDefault()
     $('#progress').text('')
     $('#error').text('')
-    var term = $('input[name=url]').val()
-    var item = $('input[name=item]').val()
-    socket.emit('search', term, item)
-    window.location.hash = term
+    var url = $('input[name="url"]').val()
+    var item = $('input[name="item"]').val()
+    socket.emit('search', {url: url, item: item})
+    window.location.hash = url
     $('form').remove()
   })
   

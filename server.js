@@ -45,12 +45,12 @@ var io = require('socket.io')(server)
 
 io.on('connection', socket => {
   
-  socket.on('search', term => {
-    console.log('Search for:', term)
+  socket.on('search', data => {
+    console.log('Search for:', data['url'])
     var urls = []
     var stores = []
     var progress = 0
-    fetch.get(term).then(body => {
+    fetch.get(data['url']).then(body => {
       $("ul a[href*='ebay.com.au/str/']", body).each( (i, e) => {
         urls.push( $(e).attr('href') )
       })
@@ -73,7 +73,8 @@ io.on('connection', socket => {
                 cache[url] = store.slice(27).replace('/','')
                 stores.push(cache[url])
                 if (stores.length == 50) {
-                  io.to(socket.id).emit('link', search + stores.join('%2C'))
+                  var link = search + stores.join('%2C') + data['item'] ? '&_nkw=' + data['item'] : ''
+                  io.to(socket.id).emit('link', link)
                   stores = []
                 }
               } else {
@@ -88,7 +89,8 @@ io.on('connection', socket => {
         }
       }).delay(1000).then(data => {
         if (stores) {
-          io.to(socket.id).emit('link', search + stores.join('%2C'))
+          var link = search + stores.join('%2C') + data['item'] ? '&_nkw=' + data['item'] : ''
+          io.to(socket.id).emit('link', link)
         }
       })
     }).catch(err => {
