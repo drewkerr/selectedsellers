@@ -1,6 +1,10 @@
 $(function(){
   
-  $('input[name="url"]').val(window.location.hash.substr(1))
+  var hash = window.location.hash.substr(1)
+  if (hash) {
+    $('input[name="url"]').val(hash)
+    $('input[name="item"]').focus()
+  }
 
   var socket = io()
   

@@ -53,10 +53,13 @@ io.on('connection', socket => {
         urls.push( $(e).attr('href') )
       })
       const makeLink = () => {
-        const search = 'https://www.ebay.com.au/sch/ebayadvsearch?_fsradio=%26LH_SpecificSeller%3D1&_sop=12&_saslop=1&_sasl='
-        var link = search + stores.join('%2C')
+        const search = 'https://www.ebay.com.au/sch/ebayadvsearch?'
+        const listing = 'https://www.ebay.com.au/sch/i.html?'
+        const sellers = '_fsradio=%26LH_SpecificSeller%3D1&_sop=12&_saslop=1&_sasl='
         if (term['item']) {
-          link += '&_nkw=' + term['item']
+          var link = listing + sellers + stores.join('%2C') + '&_nkw=' + term['item']
+        } else {
+          var link = search + stores.join('%2C')
         }
         io.to(socket.id).emit('link', link)
       }
@@ -65,7 +68,7 @@ io.on('connection', socket => {
           progress++
           stores.push(cache[url])
           if (stores.length == 50) {
-            io.to(socket.id).emit('link', search + stores.join('%2C'))
+            makeLink()
             stores = []
           }
           io.to(socket.id).emit('progress', progress / urls.length * 100)

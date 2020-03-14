@@ -32,10 +32,6 @@ button, #progress a {
   -moz-appearance: none;
 }
 
-form p {
-  color: darkgray;
-}
-
 .red {
   color: #E43137;
 }
