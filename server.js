@@ -27,12 +27,8 @@ var fetch = require('request-promise')
 const Promise = require('bluebird')
 
 app.get('/', (request, response) => {
-  response.render('index')
+  response.render('index', { hits: cache['hits'] } )
 })
-
-//app.get('/test', (request, response) => {
-//  response.render('index')
-//})
 
 var server = require('http').createServer(app)
 var listener = server.listen(process.env.PORT, () => {
@@ -44,6 +40,7 @@ var io = require('socket.io')(server)
 io.on('connection', socket => {
   
   socket.on('search', term => {
+    cache['hits'] = (cache['hits'] || 0) + 1
     console.log('Search for:', term)
     var urls = []
     var stores = []
