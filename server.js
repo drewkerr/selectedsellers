@@ -88,13 +88,15 @@ io.on('connection', socket => {
               io.to(socket.id).emit('progress', progress / urls.length * 100)
             }).catch(err => {
               console.error(url)
-              io.to(socket.id).emit('error', url + err)
+              io.to(socket.id).emit('error', 'Error: ' + url)
             })
           })
         }
       }).delay(1000).then(data => {
-        if (stores) {
+        if (stores.length) {
           makeLink()
+        } else {
+          io.to(socket.id).emit('error', 'Invalid URL')
         }
       })
     }).catch(err => {
