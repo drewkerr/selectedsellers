@@ -88,7 +88,7 @@ io.on('connection', socket => {
               io.to(socket.id).emit('progress', progress / urls.length * 100)
             }).catch(err => {
               console.error(url)
-              io.to(socket.id).emit('error', 'Error: ' + url)
+              io.to(socket.id).emit('error', 'Invalid store: ' + url)
             })
           })
         }

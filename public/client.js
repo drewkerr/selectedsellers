@@ -12,6 +12,7 @@ $(function(){
     event.preventDefault()
     $('#progress').text('')
     $('#error').text('')
+    $('p').text('Note: eBay limits queries to 50 selected stores at once.')
     var url = $('input[name="url"]').val()
     var item = $('input[name="item"]').val()
     socket.emit('search', {url: url, item: item})
