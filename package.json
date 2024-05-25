@@ -8,15 +8,15 @@
   },
   "dependencies": {
     "express": "^4.19.2",
-    "pug": "^3.0.2",
+    "pug": "^3.0.3",
     "request": "^2.88.2",
-    "cheerio": "^1.0.0-rc.12",
+    "cheerio": "^0.22.0",
     "request-promise": "^4.2.6",
-    "socket.io": "^4.6.1",
+    "socket.io": "^4.7.5",
     "bluebird": "^3.7.2"
   },
   "engines": {
-    "node": "14.x"
+    "node": "16.x"
   },
   "repository": {
     "url": "https://glitch.com/edit/#!/selectedsellers"
